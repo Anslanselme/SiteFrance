@@ -1,0 +1,2087 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>FortDébat — La boutique française</title>
+<meta name="description" content="Drapeaux, pin's, stickers et affiches collector français. La boutique officielle de FortDébat.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400..900;1,400..700&family=Bodoni+Moda:opsz,wght@6..96,400..800&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+/* ================================================================= tokens */
+:root{
+  --cream:#f3ece2;
+  --cream-2:#e8ddcf;
+  --ink:#0d0f14;
+  --night:#070b16;
+  --bleu:#16309a;
+  --bleu-2:#2a49c7;
+  --rouge:#e0263a;
+  --or:#d8b76a;
+
+  --pad:clamp(7px,.95vw,14px);
+  --r:clamp(16px,2vw,29px);
+  --gut:clamp(20px,2.62vw,38px);
+  --gut-b:clamp(20px,3.2vw,46px);
+  --nav-t:clamp(14px,1.9vw,27px);
+
+  --circ:clamp(38px,4.6vw,66px);
+  --pillh:clamp(34px,4.2vw,60px);
+  --ui:clamp(11.5px,1.22vw,17.5px);
+
+  --serif:'Playfair Display',"Iowan Old Style","Palatino Linotype",Georgia,serif;
+  --didone:'Bodoni Moda','Playfair Display',Didot,Georgia,serif;
+  --sans:'Inter',ui-sans-serif,system-ui,-apple-system,"Segoe UI",Helvetica,Arial,sans-serif;
+  --e:cubic-bezier(.66,0,.2,1);
+  --sect:clamp(64px,9vw,140px);
+}
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth}
+html.locked{overflow:hidden}
+body{
+  margin:0;background:var(--cream);color:var(--ink);
+  font-family:var(--sans);-webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+}
+::selection{background:var(--rouge);color:#fff}
+a{-webkit-tap-highlight-color:transparent}
+img,svg{display:block;max-width:100%}
+
+/* ================================================================= shell */
+.sprite{position:absolute;width:0;height:0;overflow:hidden}
+.veil{position:fixed;inset:0;background:#000;z-index:5;pointer-events:none}
+.stage{position:relative;z-index:10;height:100vh;padding:var(--pad);transform-origin:50% 50%}
+.hero{
+  position:relative;width:100%;height:100%;
+  border-radius:var(--r);overflow:hidden;isolation:isolate;background:var(--night);
+  display:flex;flex-direction:column;justify-content:space-between;
+}
+
+/* ================================================================= scène */
+.scene{position:absolute;inset:0;z-index:0;overflow:hidden}
+.scene>.bg{
+  position:absolute;inset:0;width:100%;height:100%;display:block;z-index:0;
+  transform-origin:50% 55%;animation:breathe 38s ease-in-out infinite alternate;
+  filter:blur(3px);
+}
+@keyframes breathe{from{transform:scale(1.04)}to{transform:scale(1.12)}}
+
+/* le drapeau tient toujours entier dans le cadre (meet), quel que soit le format */
+.flag{position:absolute;inset:4% 3%;z-index:1;pointer-events:none}
+.flag>svg{
+  width:100%;height:100%;display:block;
+  transform-origin:12% 50%;animation:float 17s ease-in-out infinite alternate;
+  filter:blur(.9px) saturate(1.06) contrast(1.04);
+}
+@keyframes float{
+  from{transform:rotate(-.55deg) scale(1)}
+  to{transform:rotate(.5deg) scale(1.035)}
+}
+.folds{animation:wind 13s ease-in-out infinite alternate}
+@keyframes wind{from{transform:translateX(-16px)}to{transform:translateX(18px)}}
+.scrim{position:absolute;inset:0;z-index:2;pointer-events:none}
+.scrim.t{background:linear-gradient(to bottom,rgba(3,5,12,.66),rgba(3,5,12,.14) 16%,transparent 28%)}
+.scrim.b{background:linear-gradient(to top,rgba(3,5,12,.94),rgba(3,5,12,.55) 24%,rgba(3,5,12,.16) 44%,transparent 62%)}
+.scrim.l{background:linear-gradient(100deg,rgba(3,5,12,.78),rgba(3,5,12,.2) 42%,transparent 60%)}
+.scrim.r{background:radial-gradient(82% 72% at 84% 90%,rgba(3,5,12,.9),transparent 74%)}
+.grain{
+  position:absolute;inset:-60%;z-index:3;pointer-events:none;opacity:.4;
+  background-image:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='180' height='180'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='3' stitchTiles='stitch'/><feColorMatrix type='saturate' values='0'/></filter><rect width='180' height='180' filter='url(%23n)' opacity='.55'/></svg>");
+  mix-blend-mode:overlay;animation:grain 1.05s steps(3) infinite;
+}
+@keyframes grain{
+  0%{transform:translate(0,0)}33%{transform:translate(-2.5%,2%)}
+  66%{transform:translate(2%,-2.5%)}100%{transform:translate(-1.5%,-1.5%)}
+}
+
+/* ================================================================= nav */
+.nav{
+  position:relative;z-index:3;display:flex;align-items:center;
+  padding:var(--nav-t) var(--gut) 0;gap:16px;
+}
+.nav-side{display:flex;align-items:center;flex:1 1 0;min-width:0;gap:clamp(8px,.85vw,12px)}
+.nav-side.r{justify-content:flex-end;gap:clamp(5px,.55vw,8px)}
+
+.iconbtn{
+  width:var(--circ);height:var(--circ);flex:none;border:0;padding:0;cursor:pointer;
+  border-radius:50%;background:#fff;color:var(--ink);display:grid;place-items:center;
+  transition:transform .55s var(--e);
+}
+.dots{display:grid;grid-template-columns:repeat(2,1fr);gap:clamp(3.5px,.42vw,6px)}
+.dots i{display:block;width:clamp(3.4px,.42vw,6px);aspect-ratio:1;border-radius:50%;background:var(--ink)}
+.iconbtn:hover{transform:rotate(90deg)}
+
+.navlabel{
+  font-size:var(--ui);font-weight:500;letter-spacing:-.005em;color:#fff;
+  text-decoration:none;white-space:nowrap;
+}
+.navlabel::after{content:"";display:block;height:1px;margin-top:1px;background:currentColor;
+  transform:scaleX(0);transform-origin:0 50%;transition:transform .45s var(--e)}
+.navlabel:hover::after{transform:scaleX(1)}
+
+.wordmark{
+  flex:0 0 auto;display:inline-block;
+  font-family:var(--didone);font-weight:600;font-size:clamp(14px,2.15vw,31px);
+  letter-spacing:.1em;text-indent:.1em;line-height:1;color:#fff;text-decoration:none;
+  white-space:nowrap;transform:scaleX(.78);transform-origin:50% 50%;
+}
+
+.pill{
+  display:inline-flex;align-items:center;justify-content:center;gap:.5em;
+  height:var(--pillh);padding:0 clamp(16px,2.24vw,32px);
+  border:0;cursor:pointer;
+  border-radius:999px;background:#fff;color:var(--ink);
+  font-family:var(--sans);font-size:var(--ui);font-weight:500;letter-spacing:-.005em;
+  text-decoration:none;white-space:nowrap;
+  transition:background .4s ease,color .4s ease;
+}
+.pill:hover{background:var(--ink);color:#fff}
+.count{
+  display:inline-grid;place-items:center;min-width:1.75em;height:1.75em;padding:0 .35em;
+  border-radius:999px;background:var(--rouge);color:#fff;font-size:.8em;font-weight:600;
+  transition:transform .4s var(--e);
+}
+.count.bump{transform:scale(1.35)}
+
+.circbtn{
+  width:var(--circ);height:var(--circ);flex:none;border-radius:50%;border:0;padding:0;cursor:pointer;
+  display:grid;place-items:center;background:var(--rouge);color:#fff;
+  text-decoration:none;overflow:hidden;transition:transform .55s var(--e),filter .4s ease;
+}
+.circbtn:hover{transform:scale(1.06);filter:brightness(1.08)}
+.arw{width:38%;height:38%;display:block;overflow:visible}
+.arw path{fill:none;stroke:currentColor;stroke-width:1.5;stroke-linecap:square;transform-origin:50% 50%}
+.circbtn:hover .arw path,.exp:hover .arw path{animation:arw .6s var(--e)}
+@keyframes arw{
+  0%{transform:translate(0,0)}
+  48%{transform:translate(150%,-150%);opacity:0}
+  52%{transform:translate(-150%,150%);opacity:0}
+  100%{transform:translate(0,0);opacity:1}
+}
+
+/* ================================================================= hero bas */
+.bottom{
+  position:relative;z-index:3;display:grid;align-items:end;
+  grid-template-columns:1fr 34.5%;gap:clamp(18px,2.6vw,36px);
+  padding:0 var(--gut) var(--gut-b);
+}
+h1.headline{
+  margin:0;color:#fff;font-family:var(--serif);font-weight:700;
+  font-size:clamp(32px,6.25vw,90px);line-height:1.16;letter-spacing:-.017em;
+}
+.ln{display:block;overflow:hidden;padding-bottom:.06em;margin-bottom:-.06em}
+.ln>span{display:block;will-change:transform}
+
+.aside{max-width:min(28vw,368px)}
+.aside p{
+  margin:0 0 clamp(14px,1.8vw,26px);color:#fff;
+  font-family:var(--serif);font-weight:400;
+  font-size:clamp(14px,2.1vw,30px);line-height:1.45;letter-spacing:-.004em;
+}
+.exp{
+  display:inline-flex;align-items:center;
+  height:clamp(42px,5.05vw,72px);
+  padding-left:clamp(18px,2.95vw,42px);padding-right:clamp(4px,.45vw,6px);
+  gap:clamp(14px,2.5vw,36px);
+  border-radius:999px;background:#fff;color:var(--ink);text-decoration:none;
+  font-size:var(--ui);font-weight:500;letter-spacing:-.005em;white-space:nowrap;
+  transition:transform .55s var(--e),box-shadow .55s var(--e);
+}
+.exp .circbtn{width:clamp(30px,4.15vw,59px);height:clamp(30px,4.15vw,59px);background:var(--bleu)}
+.exp:hover{transform:translateY(-2px);box-shadow:0 16px 34px -16px rgba(0,0,0,.6)}
+.exp:hover .circbtn{transform:none}
+
+/* ================================================================= barre collante */
+.topbar{
+  position:fixed;top:0;left:0;right:0;z-index:40;
+  display:flex;align-items:center;gap:20px;
+  padding:12px clamp(16px,2.62vw,38px);
+  background:rgba(243,236,226,.86);backdrop-filter:blur(14px);
+  border-bottom:1px solid rgba(13,15,20,.1);
+  transform:translateY(-102%);transition:transform .5s var(--e);
+}
+.topbar.on{transform:none}
+.topbar .wordmark{color:var(--ink);font-size:clamp(13px,1.5vw,20px)}
+.topbar nav{display:flex;gap:clamp(12px,1.6vw,26px);flex:1;justify-content:center}
+.topbar nav a{
+  color:var(--ink);text-decoration:none;font-size:clamp(11px,.95vw,14px);font-weight:500;
+  opacity:.7;transition:opacity .3s ease;
+}
+.topbar nav a:hover{opacity:1}
+.topbar .pill{background:var(--ink);color:var(--cream);height:clamp(34px,3vw,42px);padding:0 18px}
+.topbar .pill:hover{background:var(--bleu)}
+
+/* ================================================================= bandeau */
+.marquee{
+  overflow:hidden;border-top:1px solid rgba(13,15,20,.14);border-bottom:1px solid rgba(13,15,20,.14);
+  padding:clamp(12px,1.4vw,20px) 0;margin-top:clamp(28px,4vw,60px);
+}
+.marquee ul{
+  display:flex;gap:2.2em;margin:0;padding:0;list-style:none;width:max-content;
+  animation:slide 34s linear infinite;
+}
+.marquee li{
+  display:flex;align-items:center;gap:2.2em;white-space:nowrap;
+  font-size:clamp(10px,1.05vw,14px);font-weight:600;letter-spacing:.2em;text-transform:uppercase;
+}
+.marquee li::after{content:"✦";color:var(--rouge);letter-spacing:0}
+@keyframes slide{to{transform:translateX(-50%)}}
+.marquee:hover ul{animation-play-state:paused}
+
+/* ================================================================= boutique */
+.wrap{max-width:1680px;margin:0 auto;padding:0 clamp(16px,2.62vw,38px)}
+.sect{padding-top:var(--sect)}
+.sect-head{
+  display:flex;align-items:flex-end;justify-content:space-between;
+  gap:24px;flex-wrap:wrap;margin-bottom:clamp(24px,3vw,46px);
+}
+.eyebrow{
+  margin:0 0 .8em;font-size:clamp(10px,.9vw,13px);font-weight:600;
+  letter-spacing:.22em;text-transform:uppercase;color:var(--rouge);
+}
+h2{
+  margin:0;font-family:var(--serif);font-weight:700;
+  font-size:clamp(30px,4.4vw,64px);line-height:1.08;letter-spacing:-.02em;
+}
+.sect-head p{
+  margin:0;max-width:38ch;font-size:clamp(13px,1.05vw,16px);line-height:1.6;opacity:.72;
+}
+
+.filters{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:clamp(20px,2.4vw,34px)}
+.filters button{
+  border:1px solid rgba(13,15,20,.18);background:transparent;color:var(--ink);
+  font-family:var(--sans);font-size:clamp(11px,.95vw,14px);font-weight:500;
+  padding:9px 18px;border-radius:999px;cursor:pointer;
+  transition:background .3s ease,color .3s ease,border-color .3s ease;
+}
+.filters button:hover{border-color:var(--ink)}
+.filters button[aria-pressed="true"]{background:var(--ink);color:var(--cream);border-color:var(--ink)}
+
+.grid{
+  display:grid;grid-template-columns:repeat(4,1fr);
+  gap:clamp(12px,1.5vw,22px);
+}
+.card{
+  display:flex;flex-direction:column;
+  background:var(--night);color:var(--cream);
+  border-radius:clamp(14px,1.4vw,20px);overflow:hidden;
+  transition:transform .5s var(--e),box-shadow .5s var(--e);
+}
+.card:hover{transform:translateY(-5px);box-shadow:0 26px 50px -30px rgba(13,15,20,.7)}
+.card .shot{position:relative;aspect-ratio:4/5;overflow:hidden}
+.card .shot svg,.card .shot img{position:absolute;inset:0;width:100%;height:100%;
+  object-fit:cover;transition:transform .8s var(--e)}
+.card:hover .shot svg,.card:hover .shot img{transform:scale(1.05)}
+.card .shot::after{
+  content:"";position:absolute;inset:0;pointer-events:none;z-index:1;
+  background:linear-gradient(180deg,rgba(11,16,32,.02) 0%,rgba(11,16,32,0) 30%,rgba(11,16,32,.6) 100%);
+}
+
+/* plusieurs photos par article : la première sert de fond, les suivantes
+   se croisent en fondu ; flèches et points n'apparaissent que s'il y en a */
+.shot .gallery img{opacity:0}
+.shot .gallery img.on{opacity:1}
+.gnav{
+  position:absolute;top:50%;transform:translateY(-50%);z-index:3;
+  width:26px;height:26px;border-radius:50%;border:0;padding:0;cursor:pointer;
+  display:grid;place-items:center;background:rgba(11,16,32,.55);color:#fff;
+  opacity:0;transition:opacity .25s ease,background .25s ease;
+}
+.shot:hover .gnav{opacity:1}
+.gnav:hover{background:rgba(11,16,32,.85)}
+.gnav.prev{left:8px}.gnav.next{right:8px}
+.gnav svg{width:11px;height:11px;display:block}
+.gnav path{fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+.gdots{
+  position:absolute;left:0;right:0;bottom:9px;z-index:3;
+  display:flex;justify-content:center;gap:5px;
+}
+.gdots button{
+  width:5px;height:5px;border-radius:50%;border:0;padding:0;cursor:pointer;
+  background:rgba(243,236,226,.45);transition:background .25s ease,transform .25s ease;
+}
+.gdots button.on{background:#fff;transform:scale(1.4)}
+.tag{
+  position:absolute;top:12px;left:12px;z-index:2;
+  font-size:10px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;
+  padding:6px 10px;border-radius:999px;
+  background:rgba(11,16,32,.55);color:var(--cream);backdrop-filter:blur(6px);
+  box-shadow:0 1px 8px rgba(0,0,0,.25);
+}
+.card .info{padding:clamp(14px,1.1vw,20px);display:flex;flex-direction:column;gap:6px;flex:1}
+.card h3{
+  margin:0;font-family:var(--serif);font-weight:500;
+  font-size:clamp(15px,1.25vw,20px);line-height:1.25;letter-spacing:-.01em;
+}
+.card .note{font-size:clamp(11px,.88vw,13px);opacity:.5;margin:-2px 0 0;font-style:italic}
+.card .price{font-size:clamp(12px,1vw,15px);opacity:.66;margin-bottom:6px}
+.add{
+  margin-top:auto;display:flex;align-items:center;justify-content:space-between;gap:10px;
+  border:1px solid rgba(243,236,226,.22);background:transparent;color:var(--cream);
+  font-family:var(--sans);font-size:clamp(11px,.92vw,13.5px);font-weight:500;
+  padding:11px 12px 11px 16px;border-radius:999px;cursor:pointer;
+  transition:background .35s ease,color .35s ease,border-color .35s ease;
+}
+.add span:last-child{font-size:1.15em;line-height:1}
+.add:hover{background:var(--cream);color:var(--ink);border-color:var(--cream)}
+.add.done{background:var(--bleu);border-color:var(--bleu);color:#fff}
+
+/* ================================================================= posters (mise en avant) */
+.poster-feature{
+  position:relative;overflow:hidden;border-radius:var(--r);
+  background:var(--night);color:var(--cream);
+  padding:clamp(20px,3vw,40px);
+  display:grid;grid-template-columns:.85fr 1.15fr;gap:clamp(24px,4vw,60px);align-items:center;
+}
+.poster-feature::before{
+  content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background:
+    radial-gradient(60% 90% at 90% 45%,rgba(216,183,106,.3),transparent 70%),
+    radial-gradient(55% 90% at 10% 55%,rgba(22,48,154,.45),transparent 70%);
+}
+.poster-feature>*{position:relative;z-index:1}
+.poster-feature-media img{
+  width:100%;display:block;border-radius:calc(var(--r) - 10px);
+  box-shadow:0 30px 60px -28px rgba(0,0,0,.65);
+}
+.poster-feature-text .eyebrow{color:var(--or)}
+.poster-feature-text h2{font-size:clamp(26px,3.6vw,48px);margin:0 0 .5em}
+.poster-feature-text p{margin:0 0 1.4em;font-size:clamp(14px,1.15vw,18px);line-height:1.66;
+  opacity:.8;max-width:46ch}
+
+/* ================================================================= engagement */
+.pledge{
+  position:relative;overflow:hidden;border-radius:var(--r);
+  background:var(--night);color:var(--cream);
+  padding:clamp(34px,5vw,86px) clamp(24px,4vw,74px);
+  display:grid;grid-template-columns:1.15fr 1fr;gap:clamp(26px,4vw,70px);align-items:center;
+}
+.pledge::before{
+  content:"";position:absolute;inset:0;z-index:0;opacity:.5;
+  background:
+    radial-gradient(60% 90% at 88% 50%,rgba(224,38,58,.4),transparent 70%),
+    radial-gradient(55% 90% at 12% 40%,rgba(22,48,154,.55),transparent 70%);
+}
+.pledge>*{position:relative;z-index:1}
+.pledge h2{font-size:clamp(26px,3.6vw,52px)}
+.pledge p{margin:1.1em 0 0;font-size:clamp(14px,1.15vw,18px);line-height:1.66;opacity:.8;max-width:46ch}
+.stats{display:grid;gap:clamp(14px,1.6vw,24px)}
+.stat{border-top:1px solid rgba(243,236,226,.2);padding-top:clamp(10px,1.2vw,18px)}
+.stat b{
+  display:block;font-family:var(--serif);font-weight:600;
+  font-size:clamp(28px,3.4vw,48px);line-height:1;letter-spacing:-.02em;
+}
+.stat span{display:block;margin-top:.5em;font-size:clamp(11px,.95vw,14px);opacity:.66}
+
+/* ================================================================= footer */
+footer{margin-top:var(--sect);padding-bottom:clamp(28px,3vw,48px)}
+.foot-top{
+  display:grid;grid-template-columns:1.4fr repeat(3,1fr);gap:clamp(24px,3vw,48px);
+  padding:clamp(28px,3.4vw,54px) 0;border-top:1px solid rgba(13,15,20,.16);
+}
+.foot-top .wordmark{color:var(--ink);font-size:clamp(18px,2.2vw,30px)}
+.foot-top p{margin:1.2em 0 0;font-size:clamp(12px,1vw,15px);line-height:1.65;opacity:.7;max-width:34ch}
+.fcol h4{
+  margin:0 0 1.1em;font-size:clamp(10px,.9vw,12px);font-weight:600;
+  letter-spacing:.2em;text-transform:uppercase;opacity:.5;
+}
+.fcol a{
+  display:block;margin-bottom:.7em;color:var(--ink);text-decoration:none;
+  font-size:clamp(12px,1vw,15px);opacity:.8;transition:opacity .3s ease,transform .3s var(--e);
+}
+.fcol a:hover{opacity:1;transform:translateX(3px)}
+.foot-bot{
+  display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  padding-top:clamp(16px,2vw,28px);border-top:1px solid rgba(13,15,20,.16);
+  font-size:clamp(10px,.9vw,13px);opacity:.6;
+}
+.fcol a.fb{
+  display:inline-flex;align-items:center;gap:9px;color:var(--ink);text-decoration:none;
+  font-size:clamp(12px,1vw,15px);font-weight:500;
+  border:1px solid rgba(13,15,20,.2);border-radius:999px;padding:9px 18px;
+  transition:background .35s ease,color .35s ease;
+}
+.fcol a.fb:hover{background:var(--bleu);border-color:var(--bleu);color:#fff}
+.fcol a.fb svg{width:15px;height:15px;fill:currentColor}
+
+/* ================================================================= loader */
+.loadmark{
+  position:fixed;z-index:20;left:50%;top:50%;transform:translate(-50%,-50%);
+  display:flex;flex-direction:column;align-items:center;gap:clamp(8px,.85vw,13px);
+  pointer-events:none;
+}
+.loadmark .mark{
+  display:inline-block;font-family:var(--didone);font-weight:600;color:#fff;
+  font-size:clamp(30px,4.6vw,66px);letter-spacing:.1em;text-indent:.1em;line-height:1;
+  white-space:nowrap;transform:scaleX(.78);transform-origin:50% 50%;
+}
+.loadmark .tag2{
+  font-family:var(--sans);font-weight:600;color:#fff;
+  font-size:clamp(6.2px,.66vw,9.5px);letter-spacing:.2em;text-indent:.2em;white-space:nowrap;
+}
+
+/* ================================================================= intro */
+.js .veil,.js .stage,.js .loadmark,.js .nav-side,.js .nav .wordmark,
+.js .ln>span,.js .aside p,.js .exp{opacity:0}
+
+.run .stage{animation:cardIn 3.4s var(--e) forwards}
+@keyframes cardIn{
+  0%  {opacity:0;transform:scale(1.26);filter:blur(34px)}
+  9%  {opacity:1}
+  16% {transform:scale(1.16);filter:blur(26px)}
+  45% {transform:scale(.5);filter:blur(5px)}
+  58% {transform:scale(.5);filter:blur(0)}
+  100%{opacity:1;transform:scale(1);filter:blur(0)}
+}
+.run .hero{animation:radIn 3.4s var(--e) forwards}
+@keyframes radIn{0%,16%{border-radius:12px}45%,58%{border-radius:58px}100%{border-radius:var(--r)}}
+
+.run .flag{animation:unfurl 1.7s var(--e) .2s backwards}
+@keyframes unfurl{
+  from{clip-path:inset(0 100% 0 0)}
+  to{clip-path:inset(0 0 0 0)}
+}
+
+.run .veil{opacity:1;animation:veilOut 1s var(--e) 2.3s forwards}
+@keyframes veilOut{to{opacity:0}}
+
+.run .loadmark{animation:markIn 1s var(--e) .1s forwards}
+@keyframes markIn{from{opacity:0;filter:blur(7px)}to{opacity:1;filter:blur(0)}}
+.run .loadmark .tag2{animation:tagIn 1.1s var(--e) .45s backwards}
+@keyframes tagIn{from{opacity:0;transform:translateY(7px)}to{opacity:1;transform:none}}
+
+.run .nav .wordmark{animation:fadeIn .45s ease 3.32s forwards}
+.run .nav-side{animation:navIn 1s var(--e) 3.34s forwards}
+.run .nav-side.r{animation-delay:3.44s}
+@keyframes navIn{from{opacity:0;transform:translateY(-16px)}to{opacity:1;transform:none}}
+@keyframes fadeIn{to{opacity:1}}
+
+.run .ln>span{animation:lineUp 1.2s var(--e) forwards}
+.run .ln:nth-child(1)>span{animation-delay:2.75s}
+.run .ln:nth-child(2)>span{animation-delay:2.87s}
+.run .ln:nth-child(3)>span{animation-delay:2.99s}
+@keyframes lineUp{from{opacity:0;transform:translateY(112%)}to{opacity:1;transform:none}}
+
+.run .aside p{animation:softUp 1s var(--e) 3.3s forwards}
+.run .exp{animation:softUp 1s var(--e) 3.45s forwards}
+@keyframes softUp{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:none}}
+
+/* révélation au scroll */
+.rv{opacity:0;transform:translateY(26px);transition:opacity .9s var(--e),transform .9s var(--e)}
+.rv.in{opacity:1;transform:none}
+
+/* ================================================================= menu plein écran */
+button.navlabel{border:0;background:none;padding:0;font-family:var(--sans);cursor:pointer}
+.close{
+  width:44px;height:44px;border-radius:50%;border:1px solid rgba(243,236,226,.28);
+  background:transparent;color:var(--cream);font-size:17px;line-height:1;cursor:pointer;
+  transition:background .3s ease,color .3s ease,transform .5s var(--e);
+}
+.close:hover{background:var(--cream);color:var(--ink);transform:rotate(90deg)}
+
+.menu[hidden],.cart[hidden]{display:none}
+.menu{position:fixed;inset:0;z-index:60;background:var(--night);color:var(--cream);
+  display:flex;flex-direction:column;overflow:auto}
+.menu::before{
+  content:"";position:absolute;inset:0;
+  background:radial-gradient(60% 70% at 78% 30%,rgba(224,38,58,.3),transparent 70%),
+             radial-gradient(60% 80% at 12% 70%,rgba(22,48,154,.45),transparent 70%);
+}
+.menu>*{position:relative}
+.menu.closing{animation:menuOut .35s ease forwards}
+.menu:not(.closing){animation:menuIn .45s var(--e)}
+@keyframes menuIn{from{opacity:0;transform:translateY(-14px)}to{opacity:1;transform:none}}
+@keyframes menuOut{to{opacity:0;transform:translateY(-14px)}}
+.menu-in{flex:1;display:flex;flex-direction:column;width:100%;max-width:1680px;margin:0 auto;
+  padding:clamp(18px,2.2vw,30px) clamp(16px,2.62vw,38px) clamp(24px,3vw,44px)}
+.menu-top{display:flex;align-items:center;justify-content:space-between;gap:20px}
+.menu-nav{flex:1;display:flex;flex-direction:column;justify-content:center;
+  padding:clamp(24px,4vw,60px) 0;gap:clamp(2px,.4vw,6px)}
+.menu-nav a{
+  display:flex;align-items:baseline;gap:clamp(12px,1.6vw,26px);
+  color:var(--cream);text-decoration:none;
+  font-family:var(--serif);font-weight:500;letter-spacing:-.02em;
+  font-size:clamp(28px,5.4vw,68px);line-height:1.18;
+  opacity:.55;transition:opacity .35s ease,transform .5s var(--e);
+}
+.menu-nav a span{
+  font-family:var(--sans);font-size:clamp(9px,.8vw,12px);font-weight:600;
+  letter-spacing:.18em;opacity:.5;
+}
+.menu-nav a:hover{opacity:1;transform:translateX(10px)}
+.menu-foot{display:flex;justify-content:space-between;align-items:center;gap:16px;flex-wrap:wrap;
+  border-top:1px solid rgba(243,236,226,.18);padding-top:clamp(14px,1.6vw,22px);
+  font-size:clamp(11px,.95vw,14px)}
+.menu-foot a{color:var(--cream);opacity:.75;text-decoration:none}
+.menu-foot a:hover{opacity:1;text-decoration:underline}
+
+/* ================================================================= panier */
+.cart{position:fixed;inset:0;z-index:70}
+.cart-back{position:absolute;inset:0;background:rgba(7,11,22,.6);animation:fadeBack .35s ease}
+@keyframes fadeBack{from{opacity:0}to{opacity:1}}
+.cart-panel{
+  position:absolute;top:0;right:0;bottom:0;width:min(430px,100%);
+  background:var(--night);color:var(--cream);display:flex;flex-direction:column;
+  animation:slideIn .45s var(--e);
+}
+.cart.closing .cart-panel{animation:slideOut .3s ease forwards}
+.cart.closing .cart-back{opacity:0;transition:opacity .3s ease}
+@keyframes slideIn{from{transform:translateX(100%)}to{transform:none}}
+@keyframes slideOut{to{transform:translateX(100%)}}
+.cart-top{display:flex;align-items:center;justify-content:space-between;gap:16px;
+  padding:22px clamp(18px,2vw,26px);border-bottom:1px solid rgba(243,236,226,.16)}
+.cart-top h3{margin:0;font-family:var(--serif);font-weight:600;font-size:22px;letter-spacing:-.01em}
+.cart-body{flex:1;overflow:auto;padding:clamp(14px,1.6vw,22px)}
+.cart-empty{opacity:.6;font-size:14px;line-height:1.6;margin:14px 0}
+.line{display:flex;align-items:center;gap:14px;padding:13px 0;
+  border-bottom:1px solid rgba(243,236,226,.12)}
+.line-n{flex:1;min-width:0}
+.line-n b{display:block;font-family:var(--serif);font-weight:500;font-size:15px;line-height:1.3}
+.line-n span{display:block;margin-top:3px;font-size:12px;opacity:.6}
+.qty{display:flex;align-items:center;gap:9px;flex:none}
+.qty button{
+  width:26px;height:26px;border-radius:50%;border:1px solid rgba(243,236,226,.28);
+  background:transparent;color:var(--cream);cursor:pointer;font-size:14px;line-height:1;
+  transition:background .25s ease,color .25s ease}
+.qty button:hover{background:var(--cream);color:var(--ink)}
+.qty b{min-width:16px;text-align:center;font-size:13px;font-weight:600}
+.cart-foot{padding:clamp(16px,1.8vw,24px);border-top:1px solid rgba(243,236,226,.16)}
+.cart-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:14px}
+.cart-total span{font-size:13px;opacity:.65}
+.cart-total b{font-family:var(--serif);font-size:26px;font-weight:600}
+.cart-go{
+  display:flex;align-items:center;justify-content:center;gap:9px;
+  height:52px;border-radius:999px;background:var(--cream);color:var(--ink);
+  text-decoration:none;font-size:14px;font-weight:500;
+  transition:background .35s ease,color .35s ease}
+.cart-go:hover{background:var(--bleu);color:#fff}
+.cart-go[aria-disabled="true"]{opacity:.4;pointer-events:none}
+.cart-clear{
+  display:block;width:100%;margin-top:10px;border:0;background:none;color:var(--cream);
+  font-family:var(--sans);font-size:12px;opacity:.55;cursor:pointer;padding:6px}
+.cart-clear:hover{opacity:1;text-decoration:underline}
+.cart-note{margin:12px 0 0;font-size:11.5px;line-height:1.5;opacity:.5}
+
+/* ================================================================= confirmation avant envoi */
+.confirm[hidden]{display:none}
+.confirm{position:fixed;inset:0;z-index:80}
+.confirm-back{position:absolute;inset:0;background:rgba(7,11,22,.6);animation:fadeBack .3s ease}
+.confirm-panel{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:min(420px,92vw);max-height:86vh;overflow:auto;
+  background:var(--night);color:var(--cream);border-radius:var(--r);
+  padding:clamp(22px,3vw,32px);box-shadow:0 40px 80px -30px rgba(0,0,0,.6);
+  animation:confirmIn .3s var(--e);
+}
+@keyframes confirmIn{
+  from{opacity:0;transform:translate(-50%,-50%) scale(.96)}
+  to{opacity:1;transform:translate(-50%,-50%) scale(1)}
+}
+.confirm-panel h3{margin:0 0 .4em;font-family:var(--serif);font-weight:600;font-size:20px}
+.confirm-panel>p{margin:0 0 1em;font-size:13.5px;opacity:.75;line-height:1.55}
+.confirm-list{list-style:none;margin:0 0 20px;padding:0;display:flex;flex-direction:column;gap:8px}
+.confirm-list li{
+  display:flex;justify-content:space-between;gap:14px;
+  font-size:13.5px;padding-bottom:8px;border-bottom:1px solid rgba(243,236,226,.14);
+}
+.confirm-list li b{font-weight:500}
+.confirm-list li span{opacity:.6;flex:none;white-space:nowrap}
+.confirm-actions{display:flex;flex-direction:column;gap:10px}
+.confirm-yes{
+  display:flex;align-items:center;justify-content:center;
+  height:52px;border-radius:999px;border:0;cursor:pointer;
+  background:var(--cream);color:var(--ink);font-family:var(--sans);
+  font-size:14px;font-weight:500;transition:background .35s ease,color .35s ease}
+.confirm-yes:hover{background:var(--bleu);color:#fff}
+.confirm-no{
+  display:block;width:100%;border:0;background:none;cursor:pointer;
+  color:var(--cream);font-family:var(--sans);font-size:12.5px;opacity:.6;padding:6px}
+.confirm-no:hover{opacity:1;text-decoration:underline}
+
+/* ================================================================= infos */
+.faq{border-top:1px solid rgba(13,15,20,.16)}
+.faq details{border-bottom:1px solid rgba(13,15,20,.16)}
+[id]{scroll-margin-top:clamp(74px,7vw,96px)}
+.faq summary{
+  list-style:none;cursor:pointer;padding:clamp(16px,1.7vw,26px) 44px clamp(16px,1.7vw,26px) 0;
+  position:relative;font-family:var(--serif);font-weight:500;
+  font-size:clamp(17px,1.7vw,25px);letter-spacing:-.01em;
+}
+.faq summary::-webkit-details-marker{display:none}
+.faq summary::after{
+  content:"";position:absolute;right:10px;top:50%;width:13px;height:13px;
+  background:
+    linear-gradient(var(--ink),var(--ink)) center/13px 1.5px no-repeat,
+    linear-gradient(var(--ink),var(--ink)) center/1.5px 13px no-repeat;
+  transform:translateY(-50%);transition:transform .4s var(--e)}
+.faq details[open] summary::after{transform:translateY(-50%) rotate(135deg)}
+.faq summary:hover{opacity:.7}
+.faq .ans{padding:0 clamp(30px,6vw,90px) clamp(18px,2vw,30px) 0;
+  font-size:clamp(13px,1.05vw,16px);line-height:1.7;opacity:.78;max-width:70ch}
+.faq .ans p{margin:0 0 .9em}
+.faq .ans a{color:var(--bleu);text-decoration:underline;text-underline-offset:3px}
+.faq table{border-collapse:collapse;margin:.4em 0 1em;font-size:.95em}
+.faq th,.faq td{text-align:left;padding:7px 26px 7px 0;border-bottom:1px solid rgba(13,15,20,.12)}
+.faq th{font-weight:600;opacity:.6;font-size:.85em;letter-spacing:.06em;text-transform:uppercase}
+.faq details[open]>summary{color:var(--bleu)}
+.foot-bot a{color:inherit;text-decoration:none;border-bottom:1px solid rgba(13,15,20,.28)}
+.foot-bot a:hover{color:var(--bleu);border-color:var(--bleu)}
+
+
+/* ================================================================= tailles */
+.size{position:relative;display:block;margin:2px 0 9px}
+.size select{
+  width:100%;appearance:none;-webkit-appearance:none;
+  background:transparent;border:1px solid rgba(243,236,226,.24);border-radius:10px;
+  color:var(--cream);font-family:var(--sans);font-size:clamp(11px,.92vw,13.5px);
+  padding:9px 32px 9px 12px;cursor:pointer;
+}
+.size select:hover{border-color:rgba(243,236,226,.5)}
+.size select option{background:#0b1020;color:#f3ece2}
+.size::after{
+  content:"";position:absolute;right:13px;top:50%;width:7px;height:7px;
+  border-right:1.6px solid var(--cream);border-bottom:1.6px solid var(--cream);
+  transform:translateY(-72%) rotate(45deg);pointer-events:none;opacity:.65;
+}
+
+/* ================================================================= vitrine régions */
+.regions{display:grid;grid-template-columns:repeat(4,1fr);gap:clamp(12px,1.6vw,24px)}
+.rg{display:block;text-decoration:none;color:inherit}
+.rg svg{
+  width:100%;aspect-ratio:3/2;display:block;border-radius:10px;
+  box-shadow:0 12px 28px -16px rgba(13,15,20,.7);
+  transition:transform .5s var(--e),box-shadow .5s var(--e);
+}
+.rg:hover svg{transform:translateY(-5px) scale(1.02);box-shadow:0 20px 38px -18px rgba(13,15,20,.8)}
+.rg span{display:block;margin-top:10px;font-size:clamp(12px,1vw,15px);font-weight:500}
+.rg:hover span{color:var(--bleu)}
+
+/* ================================================================= responsive */
+@media (max-width:1100px){
+  .grid{grid-template-columns:repeat(3,1fr)}
+  .regions{grid-template-columns:repeat(3,1fr)}
+  .pledge{grid-template-columns:1fr}
+  .poster-feature{grid-template-columns:1fr}
+  .poster-feature-media img{max-width:320px;margin:0 auto}
+  .foot-top{grid-template-columns:1fr 1fr;row-gap:34px}
+}
+@media (max-width:900px){
+  :root{--gut:clamp(18px,4.2vw,34px);--circ:clamp(40px,6.4vw,54px);--pillh:clamp(36px,5.8vw,48px);
+        --ui:clamp(12px,1.7vw,15px)}
+  .bottom{grid-template-columns:1fr;gap:24px}
+  .aside{max-width:min(94%,430px)}
+  h1.headline{font-size:clamp(36px,8.4vw,70px);line-height:1.12}
+  .aside p{font-size:clamp(16px,2.9vw,24px)}
+  .aside p br{display:none}
+  .navlabel{display:none}
+  .wordmark{font-size:clamp(15px,3vw,24px)}
+  .exp{height:clamp(46px,7vw,58px);padding-left:clamp(20px,3.6vw,30px);gap:clamp(14px,2.6vw,22px)}
+  .exp .circbtn{width:clamp(34px,5.4vw,44px);height:clamp(34px,5.4vw,44px)}
+  .loadmark .mark{font-size:clamp(28px,7vw,52px)}
+  .loadmark .tag2{font-size:clamp(5.6px,1.15vw,8px)}
+  .grid{grid-template-columns:repeat(2,1fr)}
+  .regions{grid-template-columns:repeat(2,1fr)}
+  .topbar nav{display:none}
+}
+@media (max-width:700px){
+  .nav .pill-t{display:none}          /* le panier reste accessible, en compact */
+  .nav .pill{padding:0 12px}
+  .nav-side.r{gap:6px}
+}
+@media (max-width:560px){
+  h1.headline{font-size:9.6vw}
+  .aside p{font-size:clamp(15px,4.4vw,20px)}
+  .bottom{gap:18px}
+  .foot-top{grid-template-columns:1fr}
+}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  .js .veil,.js .stage,.js .loadmark,.js .nav-side,.js .nav .wordmark,
+  .js .ln>span,.js .aside p,.js .exp{opacity:1}
+  .run .stage,.run .hero,.run .veil,.run .loadmark,.run .nav-side,.run .nav .wordmark,
+  .run .ln>span,.run .aside p,.run .exp,.run .flag,.scene>.bg,.flag>svg,
+  .grain,.folds,.marquee ul{animation:none!important}
+  .veil,.loadmark{display:none}
+  .rv{opacity:1;transform:none}
+}
+</style>
+</head>
+<body>
+
+<!-- ===================================================== dessins de drapeaux
+     Chaque drapeau est un <symbol> en 300 × 200, réutilisé deux fois :
+     dans la vignette « Les régions » et dans la carte produit.        -->
+<svg class="sprite" aria-hidden="true" width="0" height="0" focusable="false">
+  <defs>
+    <clipPath id="wv">
+      <path d="M65,74 C110,64 150,92 196,80 C232,71 254,80 272,72 L272,196
+               C254,204 232,196 196,204 C150,216 110,188 65,198 Z"/>
+    </clipPath>
+    <linearGradient id="cardFold" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0" stop-color="#000" stop-opacity=".42"/>
+      <stop offset=".2" stop-color="#fff" stop-opacity=".14"/>
+      <stop offset=".38" stop-color="#000" stop-opacity=".3"/>
+      <stop offset=".58" stop-color="#fff" stop-opacity=".1"/>
+      <stop offset=".78" stop-color="#000" stop-opacity=".34"/>
+      <stop offset="1" stop-color="#000" stop-opacity=".5"/>
+    </linearGradient>
+
+    <!-- bras de la croix occitane, pivoté quatre fois -->
+    <g id="occCentre"><rect x="-11" y="-11" width="22" height="22"/></g>
+    <g id="occArm">
+      <path d="M-10,-6 L10,-6 L21,-52 L-21,-52 Z"/>
+      <circle cx="-21" cy="-52" r="9.5"/>
+      <circle cx="21" cy="-52" r="9.5"/>
+      <circle cx="0" cy="-63" r="9.5"/>
+    </g>
+
+    <!-- moucheture d hermine -->
+    <path id="herm" d="M0,-9 C-4,-3 -7,1 -7,5 C-7,9 7,9 7,5 C7,1 4,-3 0,-9 Z
+                       M-5,-11 a2,2 0 1,0 .1,0 Z M0,-14 a2,2 0 1,0 .1,0 Z
+                       M5,-11 a2,2 0 1,0 .1,0 Z"/>
+
+    <!-- fleur de lys -->
+    <g id="lys">
+      <path d="M0,-13 C-4,-7 -4,-3 0,-1 C4,-3 4,-7 0,-13 Z"/>
+      <path d="M-9,-4 C-14,0 -12,6 -5,7 C-8,3 -6,0 -3,-1 Z"/>
+      <path d="M9,-4 C14,0 12,6 5,7 C8,3 6,0 3,-1 Z"/>
+      <rect x="-8" y="3" width="16" height="3.4" rx="1.2"/>
+      <path d="M0,7 C-4,10 -4,13 0,16 C4,13 4,10 0,7 Z"/>
+    </g>
+
+    <!-- rayures « bendy » et bordure « componée », pour le blason de Bourgogne -->
+    <pattern id="bendy" width="26" height="26" patternTransform="rotate(45)" patternUnits="userSpaceOnUse">
+      <rect width="26" height="26" fill="#f2c230"/>
+      <rect width="13" height="26" fill="#1e3aad"/>
+    </pattern>
+    <pattern id="compony" width="18" height="18" patternUnits="userSpaceOnUse">
+      <rect width="9" height="18" fill="#d92336"/>
+      <rect x="9" width="9" height="18" fill="#f1eae0"/>
+    </pattern>
+  </defs>
+
+  <!-- France -->
+  <symbol id="rg-france" viewBox="0 0 300 200">
+    <rect width="100" height="200" fill="#2039ad"/>
+    <rect x="100" width="100" height="200" fill="#f1eae0"/>
+    <rect x="200" width="100" height="200" fill="#d92336"/>
+  </symbol>
+
+  <!-- Bretagne : Gwenn ha du -->
+  <symbol id="rg-bretagne" viewBox="0 0 300 200">
+    <rect width="300" height="200" fill="#f1eae0"/>
+    <g fill="#14161c">
+      <rect y="0" width="300" height="22.2"/>
+      <rect y="44.4" width="300" height="22.2"/>
+      <rect y="88.9" width="300" height="22.2"/>
+      <rect y="133.3" width="300" height="22.2"/>
+      <rect y="177.8" width="300" height="22.2"/>
+    </g>
+    <rect width="132" height="89" fill="#f1eae0"/>
+    <g fill="#14161c">
+      <use href="#herm" x="22" y="26"/><use href="#herm" x="55" y="26"/>
+      <use href="#herm" x="88" y="26"/><use href="#herm" x="115" y="26"/>
+      <use href="#herm" x="38" y="55"/><use href="#herm" x="71" y="55"/>
+      <use href="#herm" x="104" y="55"/>
+      <use href="#herm" x="22" y="82"/><use href="#herm" x="55" y="82"/>
+      <use href="#herm" x="88" y="82"/><use href="#herm" x="115" y="82"/>
+    </g>
+  </symbol>
+
+  <!-- Corse : tête de Maure, bandeau au-dessus des yeux (pas sur les yeux) -->
+  <!-- Corse : image officielle fournie par l'utilisateur (droits détenus) -->
+  <symbol id="rg-corse" viewBox="0 0 300 200">
+    <image href="/img/corse-drapeau.jpg" x="0" y="0" width="300" height="200" preserveAspectRatio="xMidYMid slice"/>
+  </symbol>
+
+  <!-- Alsace : Rot un Wiss -->
+  <symbol id="rg-alsace" viewBox="0 0 300 200">
+    <rect width="300" height="100" fill="#d92336"/>
+    <rect y="100" width="300" height="100" fill="#f1eae0"/>
+  </symbol>
+
+  <!-- Île-de-France : semé de lys -->
+  <symbol id="rg-idf" viewBox="0 0 300 200">
+    <rect width="300" height="200" fill="#1e3aad"/>
+    <g fill="#f2c230">
+      <use href="#lys" x="48" y="40"/><use href="#lys" x="122" y="40"/>
+      <use href="#lys" x="196" y="40"/><use href="#lys" x="264" y="40"/>
+      <use href="#lys" x="85" y="100"/><use href="#lys" x="159" y="100"/>
+      <use href="#lys" x="233" y="100"/><use href="#lys" x="18" y="100"/>
+      <use href="#lys" x="48" y="160"/><use href="#lys" x="122" y="160"/>
+      <use href="#lys" x="196" y="160"/><use href="#lys" x="264" y="160"/>
+    </g>
+  </symbol>
+
+  <!-- Midi-Pyrénées : croix occitane -->
+  <symbol id="rg-midi" viewBox="0 0 300 200">
+    <rect width="300" height="200" fill="#d92336"/>
+    <g fill="#f2c230" transform="translate(150 100) scale(1.28)">
+      <use href="#occCentre"/>
+      <use href="#occArm"/>
+      <use href="#occArm" transform="rotate(90)"/>
+      <use href="#occArm" transform="rotate(180)"/>
+      <use href="#occArm" transform="rotate(270)"/>
+    </g>
+  </symbol>
+
+  <!-- Languedoc-Roussillon : croix occitane et pals catalans -->
+  <symbol id="rg-languedoc" viewBox="0 0 300 200">
+    <rect width="150" height="200" fill="#d92336"/>
+    <rect x="150" width="150" height="200" fill="#f2c230"/>
+    <g fill="#d92336">
+      <rect x="166.7" width="16.7" height="200"/>
+      <rect x="200" width="16.7" height="200"/>
+      <rect x="233.3" width="16.7" height="200"/>
+      <rect x="266.7" width="16.7" height="200"/>
+    </g>
+    <g fill="#f2c230" transform="translate(75 100) scale(1.05)">
+      <use href="#occCentre"/>
+      <use href="#occArm"/>
+      <use href="#occArm" transform="rotate(90)"/>
+      <use href="#occArm" transform="rotate(180)"/>
+      <use href="#occArm" transform="rotate(270)"/>
+    </g>
+  </symbol>
+
+  <!-- Bourgogne : écartelé, bandé or et azur / azur à 2 fleurs de lys, bordure componée -->
+  <symbol id="rg-bourgogne" viewBox="0 0 300 200">
+    <path d="M0,0 H150 V100 H0 Z M14,14 H136 V86 H14 Z" fill-rule="evenodd" fill="url(#compony)"/>
+    <rect x="14" y="14" width="122" height="72" fill="#1e3aad"/>
+    <use href="#lys" x="52" y="42" fill="#f2c230" transform="scale(.85)" transform-origin="52 42"/>
+    <use href="#lys" x="98" y="58" fill="#f2c230" transform="scale(.85)" transform-origin="98 58"/>
+
+    <rect x="150" y="0" width="150" height="100" fill="url(#bendy)"/>
+    <rect x="0" y="100" width="150" height="100" fill="url(#bendy)"/>
+
+    <path d="M150,100 H300 V200 H150 Z M164,114 H286 V186 H164 Z" fill-rule="evenodd" fill="url(#compony)"/>
+    <rect x="164" y="114" width="122" height="72" fill="#1e3aad"/>
+    <use href="#lys" x="202" y="142" fill="#f2c230" transform="scale(.85)" transform-origin="202 142"/>
+    <use href="#lys" x="248" y="158" fill="#f2c230" transform="scale(.85)" transform-origin="248 158"/>
+  </symbol>
+
+  <!-- Auvergne : image officielle fournie par l'utilisateur (droits détenus) -->
+  <symbol id="rg-auvergne" viewBox="0 0 300 200">
+    <image href="/img/auvergne-officiel.png" x="0" y="0" width="300" height="200" preserveAspectRatio="xMidYMid slice"/>
+  </symbol>
+</svg>
+
+<div class="veil" aria-hidden="true"></div>
+
+<!-- ===================================================== barre collante -->
+<div class="topbar" id="topbar">
+  <a class="wordmark" href="#haut">FORTDÉBAT</a>
+  <nav>
+    <a href="#boutique" data-cat-link="tout">Boutique</a>
+    <a href="#boutique" data-cat-link="drapeaux">Drapeaux</a>
+    <a href="#regions">Régions</a>
+    <a href="#posters">Posters</a>
+    <a href="#boutique" data-cat-link="pins">Pins &amp; stickers</a>
+    <a href="#infos">Infos</a>
+    <a href="#engagement">Notre engagement</a>
+  </nav>
+  <button class="pill" type="button" data-open-cart aria-controls="cart"><span class="pill-t">Panier</span> <span class="count" data-count>0</span></button>
+</div>
+
+<!-- ===================================================== hero -->
+<div class="stage" id="haut">
+  <section class="hero">
+
+    <div class="scene" aria-hidden="true">
+
+      <!-- fond : remplit toujours le cadre -->
+      <svg class="bg" viewBox="0 0 1440 900" preserveAspectRatio="xMidYMid slice" role="presentation">
+        <defs>
+          <linearGradient id="nuit" x1=".12" y1="0" x2=".8" y2="1">
+            <stop offset="0" stop-color="#0b1734"/>
+            <stop offset=".5" stop-color="#050b1c"/>
+            <stop offset="1" stop-color="#02040a"/>
+          </linearGradient>
+          <radialGradient id="cle" cx=".5" cy=".44" r=".6">
+            <stop offset="0" stop-color="#33498f" stop-opacity=".62"/>
+            <stop offset=".5" stop-color="#101c42" stop-opacity=".26"/>
+            <stop offset="1" stop-color="#02040a" stop-opacity="0"/>
+          </radialGradient>
+          <radialGradient id="vign" cx=".5" cy=".46" r=".76">
+            <stop offset="0" stop-color="#02040a" stop-opacity="0"/>
+            <stop offset=".52" stop-color="#02040a" stop-opacity=".16"/>
+            <stop offset=".8" stop-color="#02040a" stop-opacity=".62"/>
+            <stop offset="1" stop-color="#02040a" stop-opacity=".95"/>
+          </radialGradient>
+          <filter id="fl2" x="-40%" y="-40%" width="180%" height="180%"><feGaussianBlur stdDeviation="66"/></filter>
+        </defs>
+
+        <rect width="1440" height="900" fill="url(#nuit)"/>
+        <rect width="1440" height="900" fill="url(#cle)"/>
+        <g filter="url(#fl2)">
+          <ellipse cx="150" cy="230" rx="250" ry="330" fill="#14245e" opacity=".4"/>
+          <ellipse cx="1300" cy="740" rx="270" ry="290" fill="#5a1018" opacity=".5"/>
+          <ellipse cx="1250" cy="170" rx="180" ry="230" fill="#1a2a63" opacity=".3"/>
+        </g>
+        <rect width="1440" height="900" fill="url(#vign)"/>
+      </svg>
+
+      <!-- drapeau : toujours entier dans le cadre, quel que soit le format -->
+      <div class="flag">
+        <svg viewBox="0 0 1240 780" preserveAspectRatio="xMidYMid meet" role="presentation">
+          <defs>
+            <linearGradient id="gBleu" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#3453cf"/>
+              <stop offset=".5" stop-color="#1e3aad"/>
+              <stop offset="1" stop-color="#0e1f66"/>
+            </linearGradient>
+            <linearGradient id="gBlanc" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#fbf6ee"/>
+              <stop offset=".5" stop-color="#eae1d3"/>
+              <stop offset="1" stop-color="#b3a99a"/>
+            </linearGradient>
+            <linearGradient id="gRouge" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#f4485a"/>
+              <stop offset=".5" stop-color="#dc2338"/>
+              <stop offset="1" stop-color="#8a1119"/>
+            </linearGradient>
+
+            <!-- plis : bandes claires / sombres irrégulières -->
+            <linearGradient id="plis" x1="0" y1="0" x2="1" y2="0">
+              <stop offset="0"    stop-color="#000000" stop-opacity=".5"/>
+              <stop offset=".04"  stop-color="#000000" stop-opacity=".16"/>
+              <stop offset=".09"  stop-color="#ffffff" stop-opacity=".2"/>
+              <stop offset=".14"  stop-color="#000000" stop-opacity=".1"/>
+              <stop offset=".2"   stop-color="#000000" stop-opacity=".5"/>
+              <stop offset=".26"  stop-color="#000000" stop-opacity=".08"/>
+              <stop offset=".32"  stop-color="#ffffff" stop-opacity=".26"/>
+              <stop offset=".38"  stop-color="#000000" stop-opacity=".18"/>
+              <stop offset=".44"  stop-color="#000000" stop-opacity=".54"/>
+              <stop offset=".5"   stop-color="#000000" stop-opacity=".1"/>
+              <stop offset=".56"  stop-color="#ffffff" stop-opacity=".24"/>
+              <stop offset=".62"  stop-color="#000000" stop-opacity=".16"/>
+              <stop offset=".69"  stop-color="#000000" stop-opacity=".52"/>
+              <stop offset=".75"  stop-color="#000000" stop-opacity=".12"/>
+              <stop offset=".81"  stop-color="#ffffff" stop-opacity=".18"/>
+              <stop offset=".88"  stop-color="#000000" stop-opacity=".3"/>
+              <stop offset="1"    stop-color="#000000" stop-opacity=".58"/>
+            </linearGradient>
+            <linearGradient id="hautBas" x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0" stop-color="#000000" stop-opacity=".42"/>
+              <stop offset=".3" stop-color="#ffffff" stop-opacity=".08"/>
+              <stop offset=".68" stop-color="#000000" stop-opacity=".1"/>
+              <stop offset="1" stop-color="#000000" stop-opacity=".5"/>
+            </linearGradient>
+            <radialGradient id="spot" cx=".5" cy=".5" r=".5">
+              <stop offset="0" stop-color="#8ea2e8" stop-opacity=".3"/>
+              <stop offset="1" stop-color="#8ea2e8" stop-opacity="0"/>
+            </radialGradient>
+
+            <clipPath id="toile">
+              <path d="M150,150
+                       C300,104 430,196 580,158
+                       C730,120 860,214 1010,176
+                       C1070,160 1120,172 1162,150
+                       C1176,300 1176,470 1162,616
+                       C1120,638 1070,626 1010,642
+                       C860,680 730,586 580,624
+                       C430,662 300,570 150,616 Z"/>
+            </clipPath>
+            <filter id="ombre" x="-30%" y="-30%" width="160%" height="180%">
+              <feGaussianBlur stdDeviation="26"/>
+            </filter>
+          </defs>
+
+          <!-- halo derrière la toile -->
+          <ellipse cx="650" cy="390" rx="580" ry="300" fill="url(#spot)"/>
+
+          <!-- ombre portée -->
+          <path d="M170,190 C320,144 450,236 600,198 C750,160 880,254 1030,216
+                   C1090,200 1140,212 1182,190 C1196,340 1196,510 1182,656
+                   C1140,678 1090,666 1030,682 C880,720 750,626 600,664
+                   C450,702 320,610 170,656 Z"
+                fill="#02040a" opacity=".75" filter="url(#ombre)"/>
+
+          <g clip-path="url(#toile)">
+            <g class="folds">
+              <rect x="60" y="60" width="400" height="700" fill="url(#gBleu)"/>
+              <rect x="460" y="60" width="400" height="700" fill="url(#gBlanc)"/>
+              <rect x="860" y="60" width="440" height="700" fill="url(#gRouge)"/>
+              <rect x="60" y="60" width="1240" height="700" fill="url(#plis)"/>
+            </g>
+            <rect x="60" y="60" width="1240" height="700" fill="url(#hautBas)"/>
+          </g>
+
+          <!-- mât -->
+          <rect x="128" y="86" width="13" height="668" rx="6" fill="#cdc3b4"/>
+          <rect x="128" y="86" width="5" height="668" fill="#ffffff" opacity=".35"/>
+          <circle cx="134.5" cy="76" r="15" fill="#d8b76a"/>
+          <circle cx="130" cy="71" r="5" fill="#f0dcaa" opacity=".8"/>
+        </svg>
+      </div>
+
+      <div class="scrim l"></div>
+      <div class="scrim r"></div>
+      <div class="scrim t"></div>
+      <div class="scrim b"></div>
+      <div class="grain"></div>
+    </div>
+
+    <header class="nav">
+      <div class="nav-side l">
+        <button class="iconbtn" type="button" data-open-menu aria-controls="menu" aria-expanded="false" aria-label="Ouvrir le menu">
+          <span class="dots"><i></i><i></i><i></i><i></i></span>
+        </button>
+        <button class="navlabel" type="button" data-open-menu aria-controls="menu">Menu</button>
+      </div>
+
+      <a class="wordmark" href="#haut" id="navMark">FORTDÉBAT</a>
+
+      <div class="nav-side r">
+        <button class="pill" type="button" data-open-cart aria-controls="cart"><span class="pill-t">Panier</span> <span class="count" data-count>0</span></button>
+        <button class="circbtn" type="button" data-open-cart aria-controls="cart"
+                aria-label="Ouvrir le panier">
+          <svg class="arw" viewBox="0 0 12 12"><path d="M2.6 9.4 L9.4 2.6 M4.1 2.6 H9.4 V7.9"/></svg>
+        </button>
+      </div>
+    </header>
+
+    <div class="bottom">
+      <h1 class="headline">
+        <span class="ln"><span>Portez haut</span></span>
+        <span class="ln"><span>ce que vous</span></span>
+        <span class="ln"><span>défendez</span></span>
+      </h1>
+
+      <div class="aside">
+        <p>Drapeaux de France et <br>de ses régions, pin's, <br>stickers et affiches collector</p>
+        <a class="exp" href="#boutique">
+          Voir la boutique
+          <span class="circbtn" aria-hidden="true">
+            <svg class="arw" viewBox="0 0 12 12"><path d="M2.6 9.4 L9.4 2.6 M4.1 2.6 H9.4 V7.9"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+
+  </section>
+</div>
+
+<!-- ===================================================== bandeau -->
+<div class="marquee" aria-hidden="true">
+  <ul>
+    <li>Fabriqué à la demande</li><li>Livraison en 7 à 9 jours</li><li>Paiement sécurisé</li><li>Élever le débat</li>
+    <li>Fabriqué à la demande</li><li>Livraison en 7 à 9 jours</li><li>Paiement sécurisé</li><li>Élever le débat</li>
+    <li>Fabriqué à la demande</li><li>Livraison en 7 à 9 jours</li><li>Paiement sécurisé</li><li>Élever le débat</li>
+    <li>Fabriqué à la demande</li><li>Livraison en 7 à 9 jours</li><li>Paiement sécurisé</li><li>Élever le débat</li>
+  </ul>
+</div>
+
+<!-- ===================================================== boutique -->
+<main class="wrap">
+  <section class="sect" id="regions">
+    <div class="sect-head rv">
+      <div>
+        <p class="eyebrow">Les régions</p>
+        <h2>La France n’est pas<br>qu’un seul drapeau</h2>
+      </div>
+      <p>Bretagne, Corse, Alsace, Occitanie… chaque région a ses couleurs, et elles
+         méritent autant d’être portées. Toutes disponibles dans les huit mêmes tailles,
+         du petit fanion au très grand format.</p>
+    </div>
+    <div class="regions rv">
+      <a class="rg" href="#boutique" data-cat-link="regions">
+        <svg viewBox="0 0 300 200" role="img" aria-label="Drapeau de la Bretagne"><use href="#rg-bretagne"/></svg>
+        <span>Bretagne</span>
+      </a>
+      <a class="rg" href="#boutique" data-cat-link="regions">
+        <svg viewBox="0 0 300 200" role="img" aria-label="Drapeau de la Corse"><use href="#rg-corse"/></svg>
+        <span>Corse</span>
+      </a>
+      <a class="rg" href="#boutique" data-cat-link="regions">
+        <svg viewBox="0 0 300 200" role="img" aria-label="Drapeau de l’Alsace"><use href="#rg-alsace"/></svg>
+        <span>Alsace</span>
+      </a>
+      <a class="rg" href="#boutique" data-cat-link="regions">
+        <svg viewBox="0 0 300 200" role="img" aria-label="Drapeau de l’Île-de-France"><use href="#rg-idf"/></svg>
+        <span>Île-de-France</span>
+      </a>
+      <a class="rg" href="#boutique" data-cat-link="regions">
+        <svg viewBox="0 0 300 200" role="img" aria-label="Drapeau du Languedoc-Roussillon"><use href="#rg-languedoc"/></svg>
+        <span>Languedoc-Roussillon</span>
+      </a>
+      <a class="rg" href="#boutique" data-cat-link="regions">
+        <svg viewBox="0 0 300 200" role="img" aria-label="Drapeau de Midi-Pyrénées"><use href="#rg-midi"/></svg>
+        <span>Midi-Pyrénées</span>
+      </a>
+      <a class="rg" href="#boutique" data-cat-link="regions">
+        <svg viewBox="0 0 300 200" role="img" aria-label="Drapeau de la Bourgogne"><use href="#rg-bourgogne"/></svg>
+        <span>Bourgogne</span>
+      </a>
+      <a class="rg" href="#boutique" data-cat-link="regions">
+        <svg viewBox="0 0 300 200" role="img" aria-label="Drapeau de l’Auvergne"><use href="#rg-auvergne"/></svg>
+        <span>Auvergne</span>
+      </a>
+    </div>
+  </section>
+
+  <section class="sect" id="posters">
+    <div class="poster-feature rv">
+      <div class="poster-feature-media">
+        <img src="/img/poster-1.jpg" alt="Aperçu de plusieurs affiches historiques françaises">
+      </div>
+      <div class="poster-feature-text">
+        <p class="eyebrow">Éditions collector</p>
+        <h2>Posters historiques<br>exceptionnels</h2>
+        <p>Des affiches de recrutement françaises, reproduites depuis les originaux
+           de la Première et de la Seconde Guerre mondiale. Huit formats, du petit
+           tirage au très grand format — livrées sans cadre, à encadrer vous-même.</p>
+        <a class="exp" href="#boutique" data-cat-link="deco">
+          Découvrir les posters
+          <span class="circbtn" aria-hidden="true">
+            <svg class="arw" viewBox="0 0 12 12"><path d="M2.6 9.4 L9.4 2.6 M4.1 2.6 H9.4 V7.9"/></svg>
+          </span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect" id="boutique">
+    <div class="sect-head rv">
+      <div>
+        <p class="eyebrow">La boutique</p>
+        <h2>Des objets qui<br>parlent pour vous</h2>
+      </div>
+      <p>Une sélection courte et assumée : le drapeau, le pin's, l'affiche de collection.
+         Tout ce qu'il faut pour afficher ce que vous pensez, sans avoir à le crier.</p>
+    </div>
+
+    <div class="filters rv" role="group" aria-label="Filtrer les produits">
+      <button type="button" data-filter="tout" aria-pressed="true">Tout</button>
+      <button type="button" data-filter="drapeaux" aria-pressed="false">Drapeaux</button>
+      <button type="button" data-filter="regions" aria-pressed="false">Régions</button>
+      <button type="button" data-filter="pins" aria-pressed="false">Pins &amp; stickers</button>
+      <button type="button" data-filter="deco" aria-pressed="false">Déco</button>
+    </div>
+
+    <div class="grid" id="grille">
+
+      <article class="card rv" data-cat="drapeaux" data-sizes="fr">
+        <div class="shot">
+          <span class="tag">Drapeaux</span>
+          <div class="gallery"><img src="/img/fr-national.jpg" alt="Drapeau français, photo du produit" loading="lazy"><img src="/img/fr-2-oeillets.jpg" alt="Drapeau français, gros plan sur les œillets" loading="lazy"><img src="/img/fr-3-plie.jpg" alt="Drapeau français, plié" loading="lazy"></div>
+        </div>
+        <div class="info">
+          <h3>Drapeau français</h3>
+          <p class="price">21,00 €</p>
+          <button class="add" type="button" data-add="Drapeau français" data-price="21">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+      <article class="card rv" data-cat="regions" data-sizes>
+        <div class="shot">
+          <span class="tag">Régions</span>
+          <div class="gallery"><img src="/img/rg-bretagne-pad.jpg" alt="Drapeau de la Bretagne, photo du produit" loading="lazy"><img src="/img/rg-bretagne-detail.jpg" alt="Drapeau de la Bretagne, détail du tissu" loading="lazy"></div>
+        </div>
+        <div class="info">
+          <h3>Drapeau de la Bretagne</h3>
+          <p class="price">21,00 €</p>
+          <button class="add" type="button" data-add="Drapeau de la Bretagne" data-price="21">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+      <article class="card rv" data-cat="regions" data-sizes>
+        <div class="shot">
+          <span class="tag">Régions</span>
+          <div class="gallery"><img src="/img/rg-corse-pad.jpg" alt="Drapeau de la Corse, photo du produit" loading="lazy"><img src="/img/rg-corse-detail.jpg" alt="Drapeau de la Corse, détail du tissu" loading="lazy"></div>
+        </div>
+        <div class="info">
+          <h3>Drapeau de la Corse</h3>
+          <p class="price">21,00 €</p>
+          <button class="add" type="button" data-add="Drapeau de la Corse" data-price="21">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+      <article class="card rv" data-cat="regions" data-sizes>
+        <div class="shot">
+          <span class="tag">Régions</span>
+          <div class="gallery"><img src="/img/rg-alsace-pad.jpg" alt="Drapeau de l’Alsace, photo du produit" loading="lazy"><img src="/img/rg-alsace-detail.jpg" alt="Drapeau de l’Alsace, détail du tissu" loading="lazy"></div>
+        </div>
+        <div class="info">
+          <h3>Drapeau de l’Alsace</h3>
+          <p class="price">21,00 €</p>
+          <button class="add" type="button" data-add="Drapeau de l’Alsace" data-price="21">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+      <article class="card rv" data-cat="regions" data-sizes>
+        <div class="shot">
+          <span class="tag">Régions</span>
+          <div class="gallery"><img src="/img/rg-idf-pad.jpg" alt="Drapeau de l’Île-de-France, photo du produit" loading="lazy"><img src="/img/rg-idf-detail.jpg" alt="Drapeau de l’Île-de-France, détail du tissu" loading="lazy"></div>
+        </div>
+        <div class="info">
+          <h3>Drapeau de l’Île-de-France</h3>
+          <p class="price">21,00 €</p>
+          <button class="add" type="button" data-add="Drapeau de l’Île-de-France" data-price="21">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+      <article class="card rv" data-cat="regions" data-sizes>
+        <div class="shot">
+          <span class="tag">Régions</span>
+          <div class="gallery"><img src="/img/rg-languedoc-pad.jpg" alt="Drapeau du Languedoc-Roussillon, photo du produit" loading="lazy"><img src="/img/rg-languedoc-detail.jpg" alt="Drapeau du Languedoc-Roussillon, détail du tissu" loading="lazy"></div>
+        </div>
+        <div class="info">
+          <h3>Drapeau du Languedoc-Roussillon</h3>
+          <p class="price">21,00 €</p>
+          <button class="add" type="button" data-add="Drapeau du Languedoc-Roussillon" data-price="21">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+      <article class="card rv" data-cat="regions" data-sizes>
+        <div class="shot">
+          <span class="tag">Régions</span>
+          <div class="gallery"><img src="/img/rg-midi-pad.jpg" alt="Drapeau de Midi-Pyrénées, photo du produit" loading="lazy"><img src="/img/rg-midi-detail.jpg" alt="Drapeau de Midi-Pyrénées, détail du tissu" loading="lazy"></div>
+        </div>
+        <div class="info">
+          <h3>Drapeau de Midi-Pyrénées</h3>
+          <p class="price">21,00 €</p>
+          <button class="add" type="button" data-add="Drapeau de Midi-Pyrénées" data-price="21">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+      <article class="card rv" data-cat="regions" data-sizes>
+        <div class="shot">
+          <span class="tag">Régions</span>
+          <div class="gallery"><img src="/img/rg-bourgogne-pad.jpg" alt="Drapeau de la Bourgogne, photo du produit" loading="lazy"><img src="/img/rg-bourgogne-detail.jpg" alt="Drapeau de la Bourgogne, détail du tissu" loading="lazy"></div>
+        </div>
+        <div class="info">
+          <h3>Drapeau de la Bourgogne</h3>
+          <p class="price">21,00 €</p>
+          <button class="add" type="button" data-add="Drapeau de la Bourgogne" data-price="21">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+      <article class="card rv" data-cat="regions" data-sizes>
+        <div class="shot">
+          <span class="tag">Régions</span>
+          <div class="gallery"><img src="/img/rg-auvergne-pad.jpg" alt="Drapeau de l’Auvergne, photo du produit" loading="lazy"><img src="/img/rg-auvergne-detail.jpg" alt="Drapeau de l’Auvergne, détail du tissu" loading="lazy"></div>
+        </div>
+        <div class="info">
+          <h3>Drapeau de l’Auvergne</h3>
+          <p class="price">21,00 €</p>
+          <button class="add" type="button" data-add="Drapeau de l’Auvergne" data-price="21">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 5 · pin's -->
+      <article class="card rv" data-cat="pins" id="pins" data-sizes="pins">
+        <div class="shot">
+          <span class="tag">Pins</span>
+          <div class="gallery"><img src="/img/pin-drapeau.jpg" alt="Pin's drapeau français, photo du produit" loading="lazy"><img src="/img/pin-2-dimensions.jpg" alt="Pin's drapeau français, avec ses dimensions" loading="lazy"></div>
+        </div>
+        <div class="info">
+          <h3>Pin's drapeau français</h3>
+          <p class="price">2,00 €</p>
+          <button class="add" type="button" data-add="Pin's drapeau français" data-price="2">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+
+      <!-- 6 · autocollants -->
+      <article class="card rv" data-cat="pins">
+        <div class="shot">
+          <span class="tag">Stickers</span>
+          <div class="gallery">
+            <img src="/img/stickers-1.jpg" alt="Pack de 50 autocollants voyage France, photo du produit" loading="lazy">
+            <img src="/img/stickers-2.jpg" alt="Pack de 50 autocollants voyage France, autre assortiment" loading="lazy">
+          </div>
+        </div>
+        <div class="info">
+          <h3>Pack de 50 autocollants voyage France</h3>
+          <p class="price">6,50 €</p>
+          <button class="add" type="button" data-add="Pack de 50 autocollants voyage France" data-price="6.50" data-ref="stickers">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+
+    
+
+      <!-- 8.1 · affiche « Français et Russes » -->
+      <article class="card rv" data-cat="deco" data-sizes="poster">
+        <div class="shot">
+          <span class="tag">Déco</span>
+          <img src="/img/poster-tilsit.jpg" alt="Affiche collector « Français et Russes — de Tilsit à Châlons », photo du produit" loading="lazy">
+        </div>
+        <div class="info">
+          <h3>Français et Russes — de Tilsit à Châlons</h3>
+          <p class="note">Reproduction d'époque · cadre non inclus</p>
+          <p class="price">32,00 €</p>
+          <button class="add" type="button" data-add="Affiche « Français et Russes — de Tilsit à Châlons »" data-price="32">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+      <!-- 8.2 · affiche « L'infanterie franç » -->
+      <article class="card rv" data-cat="deco" data-sizes="poster">
+        <div class="shot">
+          <span class="tag">Déco</span>
+          <img src="/img/poster-infanterie.jpg" alt="Affiche collector « L'infanterie française dans la bataille », photo du produit" loading="lazy">
+        </div>
+        <div class="info">
+          <h3>L'infanterie française dans la bataille</h3>
+          <p class="note">Reproduction d'époque · cadre non inclus</p>
+          <p class="price">32,00 €</p>
+          <button class="add" type="button" data-add="Affiche « L'infanterie française dans la bataille »" data-price="32">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+      <!-- 8.3 · affiche « Souscrivez aux bon » -->
+      <article class="card rv" data-cat="deco" data-sizes="poster">
+        <div class="shot">
+          <span class="tag">Déco</span>
+          <img src="/img/poster-armement.jpg" alt="Affiche collector « Souscrivez aux bons d’armement », photo du produit" loading="lazy">
+        </div>
+        <div class="info">
+          <h3>Souscrivez aux bons d’armement</h3>
+          <p class="note">Reproduction d'époque · cadre non inclus</p>
+          <p class="price">32,00 €</p>
+          <button class="add" type="button" data-add="Affiche « Souscrivez aux bons d’armement »" data-price="32">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+      <!-- 8.4 · affiche « Jeunes, choisissez » -->
+      <article class="card rv" data-cat="deco" data-sizes="poster">
+        <div class="shot">
+          <span class="tag">Déco</span>
+          <img src="/img/poster-blindee.jpg" alt="Affiche collector « Jeunes, choisissez l’arme blindée », photo du produit" loading="lazy">
+        </div>
+        <div class="info">
+          <h3>Jeunes, choisissez l’arme blindée</h3>
+          <p class="note">Reproduction d'époque · cadre non inclus</p>
+          <p class="price">32,00 €</p>
+          <button class="add" type="button" data-add="Affiche « Jeunes, choisissez l’arme blindée »" data-price="32">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+      <!-- 8.5 · affiche « Engagez-vous dans  » -->
+      <article class="card rv" data-cat="deco" data-sizes="poster">
+        <div class="shot">
+          <span class="tag">Déco</span>
+          <img src="/img/poster-cavalerie.jpg" alt="Affiche collector « Engagez-vous dans la cavalerie », photo du produit" loading="lazy">
+        </div>
+        <div class="info">
+          <h3>Engagez-vous dans la cavalerie</h3>
+          <p class="note">Reproduction d'époque · cadre non inclus</p>
+          <p class="price">32,00 €</p>
+          <button class="add" type="button" data-add="Affiche « Engagez-vous dans la cavalerie »" data-price="32">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+      <!-- 8.6 · affiche « Exposition à la gl » -->
+      <article class="card rv" data-cat="deco" data-sizes="poster">
+        <div class="shot">
+          <span class="tag">Déco</span>
+          <img src="/img/poster-afrique.jpg" alt="Affiche collector « Exposition à la gloire de l’armée d’Afrique », photo du produit" loading="lazy">
+        </div>
+        <div class="info">
+          <h3>Exposition à la gloire de l’armée d’Afrique</h3>
+          <p class="note">Reproduction d'époque · cadre non inclus</p>
+          <p class="price">32,00 €</p>
+          <button class="add" type="button" data-add="Affiche « Exposition à la gloire de l’armée d’Afrique »" data-price="32">
+            <span>Ajouter au panier</span><span>+</span>
+          </button>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- ===================================================== engagement -->
+  <section class="sect" id="engagement">
+    <div class="pledge rv">
+      <div>
+        <p class="eyebrow">Notre engagement</p>
+        <h2>Élever le débat,<br>jusque dans les objets</h2>
+        <p>FortDébat est né d'une idée simple : on peut défendre ses convictions sans hurler.
+           Cette boutique prolonge la page — des objets sobres, bien faits, qui disent d'où
+           l'on parle sans avoir besoin d'un slogan.</p>
+      </div>
+      <div class="stats">
+        <div class="stat"><b>18 000</b><span>abonnés sur la page FortDébat</span></div>
+        <div class="stat"><b>7 à 9 j</b><span>entre votre commande et la livraison</span></div>
+        <div class="stat"><b>0</b><span>pièce en stock : tout est lancé en production après votre commande</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="sect" id="infos">
+    <div class="sect-head rv">
+      <div>
+        <p class="eyebrow">Infos pratiques</p>
+        <h2>Tout ce qu'il faut<br>savoir avant</h2>
+      </div>
+      <p>Livraison, retours, contact. Une question qui n'est pas là ?
+         Écrivez-nous sur la page Facebook, on répond vite.</p>
+    </div>
+
+    <div class="faq rv">
+      <details id="livraison">
+        <summary>Livraison</summary>
+        <div class="ans">
+          <p>Rien n'est stocké : chaque pièce est lancée en production dès que votre commande
+             est validée. C'est ce qui explique le délai, et c'est aussi ce qui évite
+             les invendus.</p>
+          <p>Comptez <b>7 à 9 jours</b> entre la commande et la réception : quelques jours
+             de fabrication, puis l'acheminement. Vous recevez un numéro de suivi dès que
+             le colis part.</p>
+          <p>Si le délai dépasse largement cette fourchette, écrivez-nous sur la page
+             Facebook, on vérifie où en est votre commande.</p>
+        </div>
+      </details>
+
+      <details id="retours">
+        <summary>Retours &amp; échanges</summary>
+        <div class="ans">
+          <p>Chaque article étant fabriqué spécialement après votre commande, nous ne
+             reprenons ni n'échangeons un article qui ne conviendrait finalement pas.
+             Prenez le temps de vérifier la taille et la quantité avant de valider
+             votre commande.</p>
+          <p>En revanche, si l'article arrive <b>abîmé, défectueux, ou ne correspond pas
+             à ce que vous avez commandé</b>, écrivez-nous dans les 14 jours avec une photo :
+             nous le refaisons ou nous vous remboursons, sans frais pour vous.</p>
+          <p>La garantie légale de conformité et la garantie contre les vices cachés
+             s'appliquent dans tous les cas.</p>
+        </div>
+      </details>
+
+      <details id="contact">
+        <summary>Nous contacter</summary>
+        <div class="ans">
+          <p>Le plus rapide reste le message direct sur la page :
+             <a href="https://www.facebook.com/profile.php?id=61564701473430"
+                target="_blank" rel="noopener noreferrer">FortDébat sur Facebook</a>.</p>
+          <p>Par e-mail : [votre adresse e-mail] — réponse sous 48 h ouvrées.</p>
+        </div>
+      </details>
+
+      <details id="mentions">
+        <summary>Mentions légales</summary>
+        <div class="ans">
+          <p><b>Éditeur du site :</b> [raison sociale], [forme juridique] au capital de [montant] €,
+             [adresse complète], immatriculée au RCS de [ville] sous le numéro [SIRET].</p>
+          <p><b>Directeur de la publication :</b> [nom et prénom].</p>
+          <p><b>Hébergeur :</b> [nom de l'hébergeur], [adresse], [téléphone].</p>
+          <p><b>TVA intracommunautaire :</b> [numéro].</p>
+        </div>
+      </details>
+
+      <details id="cgv">
+        <summary>CGV &amp; confidentialité</summary>
+        <div class="ans">
+<p><b>Prix.</b> Les prix sont indiqués en euros toutes taxes comprises, hors frais
+             de livraison précisés avant la validation de la commande.</p>
+          <p><b>Fabrication à la demande.</b> Aucun article n'est stocké : la production est
+             lancée après validation de la commande. Le délai annoncé de 7 à 9 jours couvre
+             la fabrication et l'acheminement.</p>
+          <p><b>Commande et paiement.</b> La commande est confirmée par message après échange
+             avec [raison sociale]. Le paiement s'effectue par [moyens de paiement acceptés].</p>
+          <p><b>Retours.</b> Les articles étant fabriqués spécialement pour chaque commande,
+             ils ne sont ni repris ni échangés, sauf défaut de fabrication, dommage survenu
+             au transport ou erreur d'expédition. La garantie légale de conformité
+             (art. L217-3 et suivants du Code de la consommation) et la garantie des vices
+             cachés (art. 1641 et suivants du Code civil) restent pleinement applicables.</p>
+          <p><b>Données personnelles.</b> Les informations collectées servent uniquement au
+             traitement des commandes et ne sont jamais revendues. Conformément au RGPD, vous
+             pouvez demander leur accès, leur rectification ou leur suppression à
+             [votre adresse e-mail].</p>
+          <p><b>Cookies.</b> Ce site ne dépose aucun cookie de mesure d'audience ni de publicité.</p>
+        </div>
+      </details>
+    </div>
+  </section>
+</main>
+
+<!-- ===================================================== footer -->
+<footer class="wrap">
+  <div class="foot-top">
+    <div>
+      <span class="wordmark">FORTDÉBAT</span>
+      <p>La boutique officielle de la page FortDébat. Drapeaux de France et des régions,
+         pin's, stickers et affiches pour celles et ceux qui aiment le débat.</p>
+    </div>
+    <div class="fcol">
+      <h4>Boutique</h4>
+      <a href="#boutique" data-cat-link="drapeaux">Drapeaux de France</a>
+      <a href="#boutique" data-cat-link="regions">Drapeaux des régions</a>
+      <a href="#boutique" data-cat-link="pins">Pins &amp; stickers</a>
+      <a href="#boutique" data-cat-link="deco">Déco</a>
+    </div>
+    <div class="fcol">
+      <h4>Aide</h4>
+      <a href="#livraison">Livraison</a>
+      <a href="#retours">Retours</a>
+      <a href="#contact">Nous contacter</a>
+    </div>
+    <div class="fcol">
+      <h4>Suivre</h4>
+      <a class="fb" href="https://www.facebook.com/profile.php?id=61564701473430"
+         target="_blank" rel="noopener noreferrer">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12a10 10 0 1 0-11.6 9.9v-7H7.9V12h2.5V9.8c0-2.5 1.5-3.9 3.8-3.9 1.1 0 2.2.2 2.2.2v2.4h-1.2c-1.2 0-1.6.8-1.6 1.6V12h2.7l-.4 2.9h-2.3v7A10 10 0 0 0 22 12z"/></svg>
+        Facebook
+      </a>
+    </div>
+  </div>
+  <div class="foot-bot">
+    <span>© <span id="an">2026</span> FortDébat — Tous droits réservés</span>
+    <span><a href="#mentions">Mentions légales</a> · <a href="#cgv">CGV</a> · <a href="#cgv">Confidentialité</a></span>
+  </div>
+</footer>
+
+<!-- ===================================================== menu -->
+<div class="menu" id="menu" hidden>
+  <div class="menu-in">
+    <div class="menu-top">
+      <a class="wordmark" href="#haut" data-close-menu>FORTDÉBAT</a>
+      <button class="close" type="button" data-close-menu aria-label="Fermer le menu">&#10005;</button>
+    </div>
+    <nav class="menu-nav">
+      <a href="#boutique" data-cat-link="tout"><span>01</span>Toute la boutique</a>
+      <a href="#boutique" data-cat-link="drapeaux"><span>02</span>Drapeaux de France</a>
+      <a href="#boutique" data-cat-link="regions"><span>03</span>Drapeaux des régions</a>
+      <a href="#posters" data-close-menu><span>04</span>Posters historiques</a>
+      <a href="#boutique" data-cat-link="pins"><span>05</span>Pins &amp; stickers</a>
+      <a href="#boutique" data-cat-link="deco"><span>06</span>Déco</a>
+      <a href="#engagement" data-close-menu><span>07</span>Notre engagement</a>
+      <a href="#infos" data-close-menu><span>08</span>Infos pratiques</a>
+    </nav>
+    <div class="menu-foot">
+      <a href="https://www.facebook.com/profile.php?id=61564701473430"
+         target="_blank" rel="noopener noreferrer">Suivre FortDébat sur Facebook &#8599;</a>
+      <a href="#contact" data-close-menu>Nous contacter</a>
+    </div>
+  </div>
+</div>
+
+<!-- ===================================================== panier -->
+<div class="cart" id="cart" hidden>
+  <div class="cart-back" data-close-cart></div>
+  <aside class="cart-panel" role="dialog" aria-modal="true" aria-label="Votre panier">
+    <div class="cart-top">
+      <h3>Votre panier</h3>
+      <button class="close" type="button" data-close-cart aria-label="Fermer le panier">&#10005;</button>
+    </div>
+    <div class="cart-body" id="cartBody"></div>
+    <div class="cart-foot">
+      <div class="cart-total"><span>Total</span><b id="cartTotal">0,00 €</b></div>
+      <a class="cart-go" id="cartGo" href="#" aria-disabled="true"><span class="go-t">Payer avec Stripe</span> &#8599;</a>
+      <button class="cart-clear" type="button" id="cartClear">Vider le panier</button>
+      <p class="cart-note">Paiement sécurisé par Stripe. Vous renseignez votre adresse de
+         livraison directement sur la page de paiement. Chaque pièce est ensuite fabriquée
+         à la demande, comptez 7 à 9 jours.</p>
+    </div>
+  </aside>
+</div>
+
+<!-- ===================================================== confirmation avant envoi -->
+<div class="confirm" id="confirm" hidden>
+  <div class="confirm-back" data-close-confirm></div>
+  <div class="confirm-panel" role="dialog" aria-modal="true" aria-label="Confirmer votre commande">
+    <h3>Avant d'envoyer votre commande</h3>
+    <p>Vérifiez que ce sont bien les tailles et quantités que vous voulez pour chaque
+       article (drapeaux, affiches…) — une fois le message envoyé, on ne pourra plus
+       les changer sans repartir de zéro.</p>
+    <ul class="confirm-list" id="confirmList"></ul>
+    <div class="confirm-actions">
+      <button type="button" class="confirm-yes" id="confirmYes">Oui, c'est bon &#8599;</button>
+      <button type="button" class="confirm-no" id="confirmNo">Laissez-moi revérifier</button>
+    </div>
+  </div>
+</div>
+
+<div class="loadmark" aria-hidden="true">
+  <span class="mark">FORTDÉBAT</span>
+  <span class="tag2">ÉLEVER LE DÉBAT · LA BOUTIQUE OFFICIELLE</span>
+</div>
+
+<script>
+(function(){
+  var b=document.body,
+      lm=document.querySelector('.loadmark'),
+      mk=document.querySelector('.loadmark .mark'),
+      tg=document.querySelector('.loadmark .tag2'),
+      nv=document.getElementById('navMark'),
+      st=document.querySelector('.stage'),
+      EASE='cubic-bezier(.66,0,.2,1)',
+      reduce=matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  b.classList.add('js');
+  document.getElementById('an').textContent=new Date().getFullYear();
+
+  /* l'intro part toujours du haut : sinon un rechargement en cours de page
+     ferait mesurer le mot-symbole hors de l'écran. */
+  if('scrollRestoration' in history) history.scrollRestoration='manual';
+
+  /* ---------------------------------------------------------- intro */
+  function flip(){
+    var a=mk.getBoundingClientRect(), t=nv.getBoundingClientRect();
+    if(!a.width||!t.width) return;
+
+    /* le mot-symbole du menu est dans le hero, encore en plein zoom :
+       on divise par l'échelle courante pour viser sa position finale. */
+    var k=new DOMMatrixReadOnly(getComputedStyle(st).transform).a||1,
+        cx=innerWidth/2, cy=innerHeight/2;
+    t={width:t.width/k,height:t.height/k,
+       left:(t.left-cx)/k+cx, top:(t.top-cy)/k+cy};
+
+    lm.style.transformOrigin='50% '+(a.height/2)+'px';
+
+    var s=t.width/a.width,
+        dx=(t.left+t.width/2)-(a.left+a.width/2),
+        dy=(t.top+t.height/2)-(a.top+a.height/2);
+
+    lm.animate(
+      [{transform:'translate(-50%,-50%)'},
+       {transform:'translate(-50%,-50%) translate('+dx+'px,'+dy+'px) scale('+s+')'}],
+      {duration:1250,easing:EASE,fill:'forwards'});
+
+    tg.animate([{opacity:1},{opacity:0}],{duration:340,easing:'ease-out',fill:'forwards'});
+    setTimeout(function(){
+      lm.animate([{opacity:1},{opacity:0}],{duration:190,easing:'linear',fill:'forwards'});
+    },1180);
+  }
+
+  function start(){
+    if(reduce){b.classList.add('run');return;}
+    if(!location.hash) window.scrollTo(0,0);
+    document.documentElement.classList.add('locked');
+    b.classList.add('run');
+    setTimeout(flip,2150);
+    setTimeout(function(){
+      document.documentElement.classList.remove('locked');
+      if(!location.hash) window.scrollTo(0,0);   /* le navigateur peut avoir restauré une position */
+    },3500);
+  }
+
+  var fired=false,go=function(){if(!fired){fired=true;start();}};
+  if(document.fonts&&document.fonts.load){
+    Promise.all([
+      document.fonts.load("600 66px 'Bodoni Moda'"),
+      document.fonts.load("700 90px 'Playfair Display'"),
+      document.fonts.load("500 17px 'Inter'")
+    ]).then(go,go);
+  }
+  setTimeout(go,1500);
+
+  /* ---------------------------------------------------------- barre collante */
+  var bar=document.getElementById('topbar');
+  if('IntersectionObserver' in window){
+    new IntersectionObserver(function(e){
+      bar.classList.toggle('on',!e[0].isIntersecting);
+    },{rootMargin:'-70% 0px 0px 0px'}).observe(st);
+
+    /* ------------------------------------------------------- révélations */
+    var io=new IntersectionObserver(function(es){
+      es.forEach(function(e){
+        if(e.isIntersecting){e.target.classList.add('in');io.unobserve(e.target);}
+      });
+    },{rootMargin:'0px 0px -12% 0px'});
+    [].forEach.call(document.querySelectorAll('.rv'),function(el,i){
+      el.style.transitionDelay=(Math.min(i,6)*55)+'ms';
+      io.observe(el);
+    });
+  }else{
+    [].forEach.call(document.querySelectorAll('.rv'),function(el){el.classList.add('in');});
+  }
+
+  /* ---------------------------------------------------------- menu */
+  var menu=document.getElementById('menu'),
+      openers=document.querySelectorAll('[data-open-menu]');
+
+  function openMenu(){
+    menu.hidden=false; menu.classList.remove('closing');
+    document.documentElement.classList.add('locked');
+    [].forEach.call(openers,function(o){o.setAttribute('aria-expanded','true');});
+    var f=menu.querySelector('.menu-nav a'); if(f) f.focus();
+  }
+  function closeMenu(){
+    if(menu.hidden) return;
+    menu.classList.add('closing');
+    document.documentElement.classList.remove('locked');
+    [].forEach.call(openers,function(o){o.setAttribute('aria-expanded','false');});
+    setTimeout(function(){menu.hidden=true;menu.classList.remove('closing');},340);
+  }
+  [].forEach.call(openers,function(o){o.addEventListener('click',openMenu);});
+  [].forEach.call(document.querySelectorAll('[data-close-menu]'),function(o){
+    o.addEventListener('click',closeMenu);
+  });
+
+  /* ---------------------------------------------------------- filtres */
+  var fbtns=document.querySelectorAll('.filters button'),
+      cards=document.querySelectorAll('#grille .card');
+
+  function applyFilter(f){
+    [].forEach.call(fbtns,function(o){
+      o.setAttribute('aria-pressed',String(o.getAttribute('data-filter')===f));
+    });
+    [].forEach.call(cards,function(c){
+      c.style.display=(f==='tout'||c.getAttribute('data-cat')===f)?'':'none';
+    });
+  }
+  [].forEach.call(fbtns,function(b){
+    b.addEventListener('click',function(){applyFilter(b.getAttribute('data-filter'));});
+  });
+  /* un lien de catégorie filtre la grille puis y descend */
+  [].forEach.call(document.querySelectorAll('[data-cat-link]'),function(a){
+    a.addEventListener('click',function(){
+      applyFilter(a.getAttribute('data-cat-link'));
+      closeMenu();
+    });
+  });
+
+  /* ----------------------------------------------------------------------
+     TAILLES ET QUANTITÉS
+     Une table de prix par défaut pour les drapeaux régionaux (8 formats),
+     et une table à part pour chaque produit qui a ses propres paliers
+     (le drapeau français en cm, les pin's en quantité). Pour changer un
+     tarif ou ajouter un palier, c'est ici et nulle part ailleurs.
+  ---------------------------------------------------------------------- */
+  var SIZES_DEFAUT=[
+    ['14 × 21 cm',     4.50],
+    ['20 × 30 cm',     5.00],
+    ['30 × 45 cm',     8.00],
+    ['60 × 90 cm',    12.00],
+    ['90 × 150 cm',   21.00],
+    ['120 × 180 cm',  51.00],
+    ['150 × 240 cm',  75.00],
+    ['180 × 300 cm', 105.00]
+  ];
+  var DEFAUT_PAR_DEFAUT=4;             /* 90 × 150 cm */
+
+  var TABLES={
+    fr:{ sizes:[ ['60 × 90 cm', 12.00], ['90 × 150 cm', 21.00] ], defaut:1 },
+    pins:{
+      label:'Quantité', defaut:0,
+      sizes:[
+        ['1 pièce',    2.00],
+        ['3 pièces',   5.00],
+        ['5 pièces',   9.00],
+        ['10 pièces', 18.50],
+        ['50 pièces', 93.00],
+        ['100 pièces',148.00]
+      ]
+    },
+    poster:{
+      defaut:3,
+      sizes:[
+        ['13 × 18 cm', 18.00],
+        ['20 × 25 cm', 21.00],
+        ['21 × 30 cm', 25.00],
+        ['30 × 40 cm', 32.00],
+        ['30 × 42 cm', 34.00],
+        ['40 × 50 cm', 38.00],
+        ['40 × 60 cm', 42.00],
+        ['50 × 70 cm', 84.00]
+      ]
+    }
+  };
+
+  /* references catalogue serveur (voir catalog.json) — memes noms de produit
+     (h3) et meme ordre de tailles que la table correspondante ci-dessus. */
+  var REFS_BY_NAME={
+    'Drapeau français':['fr-60x90','fr-90x150'],
+    'Drapeau de la Bretagne':['bretagne-14x21','bretagne-20x30','bretagne-30x45','bretagne-60x90','bretagne-90x150','bretagne-120x180','bretagne-150x240','bretagne-180x300'],
+    'Drapeau de la Corse':['corse-14x21','corse-20x30','corse-30x45','corse-60x90','corse-90x150','corse-120x180','corse-150x240','corse-180x300'],
+    'Drapeau de l’Alsace':['alsace-14x21','alsace-20x30','alsace-30x45','alsace-60x90','alsace-90x150','alsace-120x180','alsace-150x240','alsace-180x300'],
+    'Drapeau de l’Île-de-France':['idf-14x21','idf-20x30','idf-30x45','idf-60x90','idf-90x150','idf-120x180','idf-150x240','idf-180x300'],
+    'Drapeau du Languedoc-Roussillon':['languedoc-14x21','languedoc-20x30','languedoc-30x45','languedoc-60x90','languedoc-90x150','languedoc-120x180','languedoc-150x240','languedoc-180x300'],
+    'Drapeau de Midi-Pyrénées':['midi-14x21','midi-20x30','midi-30x45','midi-60x90','midi-90x150','midi-120x180','midi-150x240','midi-180x300'],
+    'Drapeau de la Bourgogne':['bourgogne-14x21','bourgogne-20x30','bourgogne-30x45','bourgogne-60x90','bourgogne-90x150','bourgogne-120x180','bourgogne-150x240','bourgogne-180x300'],
+    'Drapeau de l’Auvergne':['auvergne-14x21','auvergne-20x30','auvergne-30x45','auvergne-60x90','auvergne-90x150','auvergne-120x180','auvergne-150x240','auvergne-180x300'],
+    'Pin\'s drapeau français':['pins-1','pins-3','pins-5','pins-10','pins-50','pins-100'],
+    'Français et Russes — de Tilsit à Châlons':['poster-tilsit-13x18','poster-tilsit-20x25','poster-tilsit-21x30','poster-tilsit-30x40','poster-tilsit-30x42','poster-tilsit-40x50','poster-tilsit-40x60','poster-tilsit-50x70'],
+    'L\'infanterie française dans la bataille':['poster-infanterie-13x18','poster-infanterie-20x25','poster-infanterie-21x30','poster-infanterie-30x40','poster-infanterie-30x42','poster-infanterie-40x50','poster-infanterie-40x60','poster-infanterie-50x70'],
+    'Souscrivez aux bons d’armement':['poster-armement-13x18','poster-armement-20x25','poster-armement-21x30','poster-armement-30x40','poster-armement-30x42','poster-armement-40x50','poster-armement-40x60','poster-armement-50x70'],
+    'Jeunes, choisissez l’arme blindée':['poster-blindee-13x18','poster-blindee-20x25','poster-blindee-21x30','poster-blindee-30x40','poster-blindee-30x42','poster-blindee-40x50','poster-blindee-40x60','poster-blindee-50x70'],
+    'Engagez-vous dans la cavalerie':['poster-cavalerie-13x18','poster-cavalerie-20x25','poster-cavalerie-21x30','poster-cavalerie-30x40','poster-cavalerie-30x42','poster-cavalerie-40x50','poster-cavalerie-40x60','poster-cavalerie-50x70'],
+    'Exposition à la gloire de l’armée d’Afrique':['poster-afrique-13x18','poster-afrique-20x25','poster-afrique-21x30','poster-afrique-30x40','poster-afrique-30x42','poster-afrique-40x50','poster-afrique-40x60','poster-afrique-50x70']
+  };
+
+  [].forEach.call(document.querySelectorAll('.card[data-sizes]'),function(card){
+    var cle=card.getAttribute('data-sizes'),
+        table=(cle && TABLES[cle]) ? TABLES[cle] : {sizes:SIZES_DEFAUT, defaut:DEFAUT_PAR_DEFAUT},
+        SIZES=table.sizes, SIZE_PAR_DEFAUT=table.defaut,
+        info=card.querySelector('.info'),
+        price=card.querySelector('.price'),
+        btn=card.querySelector('.add'),
+        nom=card.querySelector('h3').textContent.trim(),
+        refs=REFS_BY_NAME[nom]||[],
+        sel=document.createElement('select'),
+        lab=document.createElement('label');
+
+    sel.setAttribute('aria-label',(table.label||'Taille')+' — '+nom);
+    SIZES.forEach(function(s,i){
+      var o=document.createElement('option');
+      o.value=i; o.textContent=s[0];
+      if(i===SIZE_PAR_DEFAUT) o.selected=true;
+      sel.appendChild(o);
+    });
+    lab.className='size'; lab.appendChild(sel);
+    info.insertBefore(lab,price);
+
+    function sync(){
+      var s=SIZES[+sel.value];
+      price.textContent=euro(s[1]);
+      btn.setAttribute('data-price',s[1]);
+      btn.setAttribute('data-add',nom+' — '+s[0]);
+      btn.setAttribute('data-ref',refs[+sel.value]||'');
+    }
+    sel.addEventListener('change',sync);
+    sync();
+  });
+
+  /* ---------------------------------------------------------- panier */
+  var cart={},
+      cartEl=document.getElementById('cart'),
+      cartBody=document.getElementById('cartBody'),
+      totalEl=document.getElementById('cartTotal'),
+      goEl=document.getElementById('cartGo'),
+      counters=document.querySelectorAll('[data-count]');
+
+  function esc(t){return String(t).replace(/&/g,'&amp;').replace(/</g,'&lt;')
+                                  .replace(/>/g,'&gt;').replace(/"/g,'&quot;');}
+  function euro(v){return v.toFixed(2).replace('.',',')+' €';}
+
+  function render(bump){
+    var n=0,total=0,html='',keys=Object.keys(cart);
+    keys.forEach(function(k){
+      var it=cart[k]; n+=it.q; total+=it.q*it.p;
+      html+='<div class="line"><div class="line-n"><b>'+esc(k)+'</b>'
+          + '<span>'+euro(it.p)+' l’unité</span></div>'
+          + '<div class="qty">'
+          + '<button type="button" data-dec="'+esc(k)+'" aria-label="Retirer un">−</button>'
+          + '<b>'+it.q+'</b>'
+          + '<button type="button" data-inc="'+esc(k)+'" aria-label="Ajouter un">+</button>'
+          + '</div></div>';
+    });
+    cartBody.innerHTML=html||'<p class="cart-empty">Votre panier est vide.<br>'
+      + 'Parcourez la boutique pour y ajouter quelque chose.</p>';
+    totalEl.textContent=euro(total);
+    goEl.setAttribute('aria-disabled',keys.length?'false':'true');
+    [].forEach.call(counters,function(c){
+      c.textContent=n;
+      if(bump){c.classList.add('bump');setTimeout(function(){c.classList.remove('bump');},260);}
+    });
+  }
+
+  cartBody.addEventListener('click',function(e){
+    var t=e.target.closest&&e.target.closest('[data-inc],[data-dec]');
+    if(!t) return;
+    var k=t.getAttribute('data-inc')||t.getAttribute('data-dec');
+    if(!cart[k]) return;
+    cart[k].q += t.hasAttribute('data-inc') ? 1 : -1;
+    if(cart[k].q<=0) delete cart[k];
+    render(true);
+  });
+
+  document.getElementById('cartClear').addEventListener('click',function(){
+    cart={}; render(true);
+  });
+
+  /* ----------------------------------------------------------------------
+     FINALISATION DE COMMANDE
+
+     On envoie au serveur uniquement des references (catalog.json) et des
+     quantites — jamais les prix affiches ici. C'est /api/create-checkout-
+     session.js qui relit le vrai prix cote serveur avant de creer la
+     session Stripe, pour qu'un client ne puisse pas trafiquer un montant
+     depuis la console du navigateur.
+  ---------------------------------------------------------------------- */
+  function cartItems(){
+    return Object.keys(cart).map(function(k){
+      return {name:k, price:cart[k].p, qty:cart[k].q, ref:cart[k].ref};
+    });
+  }
+  function checkout(){
+    var lab=goEl.querySelector('.go-t')||goEl,
+        base=lab.textContent,
+        items=cartItems().map(function(i){return {ref:i.ref,qty:i.qty};});
+
+    if(items.some(function(i){return !i.ref;})){
+      lab.textContent='Article invalide, revérifiez le panier';
+      setTimeout(function(){lab.textContent=base;},2600);
+      return;
+    }
+
+    lab.textContent='Redirection vers le paiement…';
+    fetch('/api/create-checkout-session',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({items:items})
+    })
+      .then(function(r){return r.json();})
+      .then(function(data){
+        if(data && data.url){ location.href=data.url; }
+        else{
+          lab.textContent='Erreur, réessayez';
+          setTimeout(function(){lab.textContent=base;},2600);
+        }
+      })
+      .catch(function(){
+        lab.textContent='Erreur réseau, réessayez';
+        setTimeout(function(){lab.textContent=base;},2600);
+      });
+  }
+  /* avant d'envoyer, on fait confirmer les tailles/quantités choisies :
+     trop facile d'ajouter au panier sans avoir vérifié le sélecteur. */
+  var confirmEl=document.getElementById('confirm'),
+      confirmList=document.getElementById('confirmList');
+
+  function openConfirm(){
+    /* ne touche pas à .locked : le panier est déjà ouvert (et verrouillé) derrière */
+    confirmList.innerHTML=cartItems().map(function(i){
+      return '<li><b>'+esc(i.name)+'</b><span>× '+i.qty+'</span></li>';
+    }).join('');
+    confirmEl.hidden=false;
+  }
+  function closeConfirm(){
+    confirmEl.hidden=true;
+  }
+
+  goEl.addEventListener('click',function(e){
+    if(goEl.getAttribute('aria-disabled')==='true'){e.preventDefault();return;}
+    e.preventDefault();
+    openConfirm();
+  });
+  document.getElementById('confirmYes').addEventListener('click',function(){
+    closeConfirm();
+    checkout();
+  });
+  document.getElementById('confirmNo').addEventListener('click',closeConfirm);
+  document.querySelector('[data-close-confirm]').addEventListener('click',closeConfirm);
+
+  function openCart(){
+    cartEl.hidden=false; cartEl.classList.remove('closing');
+    document.documentElement.classList.add('locked');
+  }
+  function closeCart(){
+    if(cartEl.hidden) return;
+    cartEl.classList.add('closing');
+    document.documentElement.classList.remove('locked');
+    setTimeout(function(){cartEl.hidden=true;cartEl.classList.remove('closing');},300);
+  }
+  [].forEach.call(document.querySelectorAll('[data-open-cart]'),function(o){
+    o.addEventListener('click',function(){closeMenu();openCart();});
+  });
+  [].forEach.call(document.querySelectorAll('[data-close-cart]'),function(o){
+    o.addEventListener('click',closeCart);
+  });
+
+  [].forEach.call(document.querySelectorAll('.add'),function(btn){
+    var label=btn.querySelector('span'), base=label.textContent;
+    btn.addEventListener('click',function(){
+      var k=btn.getAttribute('data-add'), p=parseFloat(btn.getAttribute('data-price'))||0,
+          ref=btn.getAttribute('data-ref')||'';
+      cart[k]=cart[k]||{p:p,q:0,ref:ref};
+      cart[k].q++;
+      render(true);
+      btn.classList.add('done'); label.textContent='Ajouté';
+      clearTimeout(btn._t);
+      btn._t=setTimeout(function(){btn.classList.remove('done');label.textContent=base;},1400);
+    });
+  });
+
+  render(false);
+
+  /* ---------------------------------------------------------- galeries photos */
+  /* chaque bloc « gallery » peut contenir plusieurs images : la première
+     est affichée par défaut, les suivantes se dévoilent via les flèches ou
+     les points. S'il n'y en a qu'une, on ne touche à rien. */
+  [].forEach.call(document.querySelectorAll('.shot .gallery'),function(g){
+    var imgs=[].slice.call(g.querySelectorAll('img')), i=0;
+    if(!imgs.length) return;
+    imgs[0].classList.add('on');
+    if(imgs.length<2) return;
+
+    var shot=g.parentNode, dots=document.createElement('div');
+    dots.className='gdots';
+    imgs.forEach(function(_,idx){
+      var b=document.createElement('button');
+      b.type='button';
+      b.setAttribute('aria-label','Photo '+(idx+1)+' sur '+imgs.length);
+      if(idx===0) b.classList.add('on');
+      b.addEventListener('click',function(e){e.preventDefault();e.stopPropagation();show(idx);});
+      dots.appendChild(b);
+    });
+    shot.appendChild(dots);
+
+    function arrow(cls,delta,label,d){
+      var b=document.createElement('button');
+      b.type='button'; b.className='gnav '+cls; b.setAttribute('aria-label',label);
+      b.innerHTML='<svg viewBox="0 0 12 12"><path d="'+d+'"/></svg>';
+      b.addEventListener('click',function(e){
+        e.preventDefault(); e.stopPropagation();
+        show((i+delta+imgs.length)%imgs.length);
+      });
+      shot.appendChild(b);
+    }
+    arrow('prev',-1,'Photo précédente','M7.5 2.5 3 6l4.5 3.5');
+    arrow('next', 1,'Photo suivante',  'M4.5 2.5 9 6l-4.5 3.5');
+
+    function show(idx){
+      imgs[i].classList.remove('on'); dots.children[i].classList.remove('on');
+      i=idx;
+      imgs[i].classList.add('on'); dots.children[i].classList.add('on');
+    }
+  });
+
+  /* ---------------------------------------------------------- ancres */
+  /* on gère le défilement nous-mêmes : ça ouvre l accordéon visé, ferme les
+     panneaux, dégage la barre collante, et marche même hors serveur HTTP. */
+  function goTo(id){
+    if(id==='haut'){
+      window.scrollTo({top:0,behavior:reduce?'auto':'smooth'});
+      return true;
+    }
+    var el=document.getElementById(id);
+    if(!el) return false;
+    if(el.tagName==='DETAILS') el.open=true;
+    el.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    return true;
+  }
+
+  [].forEach.call(document.querySelectorAll('a[href^="#"]'),function(a){
+    a.addEventListener('click',function(e){
+      var id=a.getAttribute('href').slice(1);
+      if(!id) return;
+      e.preventDefault();
+      closeMenu(); closeCart();
+      setTimeout(function(){
+        if(goTo(id)){ try{history.replaceState(null,'','#'+id);}catch(err){} }
+      },12);
+    });
+  });
+
+  window.addEventListener('hashchange',function(){
+    closeMenu(); goTo(location.hash.slice(1));
+  });
+
+  document.addEventListener('keydown',function(e){
+    if(e.key==='Escape'||e.key==='Esc'){closeConfirm();closeMenu();closeCart();}
+  });
+})();
+</script>
+</body>
+</html>

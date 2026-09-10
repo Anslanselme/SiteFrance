@@ -1,0 +1,225 @@
+{
+  "fr": {
+    "name": "Drapeau français",
+    "image": "fr-national.jpg",
+    "sizes": [
+      { "ref": "fr-60x90", "label": "60 × 90 cm", "price": 12.00 },
+      { "ref": "fr-90x150", "label": "90 × 150 cm", "price": 21.00 }
+    ]
+  },
+  "bretagne": {
+    "name": "Drapeau de la Bretagne",
+    "image": "rg-bretagne-pad.jpg",
+    "sizes": [
+      { "ref": "bretagne-14x21", "label": "14 × 21 cm", "price": 4.50 },
+      { "ref": "bretagne-20x30", "label": "20 × 30 cm", "price": 5.00 },
+      { "ref": "bretagne-30x45", "label": "30 × 45 cm", "price": 8.00 },
+      { "ref": "bretagne-60x90", "label": "60 × 90 cm", "price": 12.00 },
+      { "ref": "bretagne-90x150", "label": "90 × 150 cm", "price": 21.00 },
+      { "ref": "bretagne-120x180", "label": "120 × 180 cm", "price": 51.00 },
+      { "ref": "bretagne-150x240", "label": "150 × 240 cm", "price": 75.00 },
+      { "ref": "bretagne-180x300", "label": "180 × 300 cm", "price": 105.00 }
+    ]
+  },
+  "corse": {
+    "name": "Drapeau de la Corse",
+    "image": "rg-corse-pad.jpg",
+    "sizes": [
+      { "ref": "corse-14x21", "label": "14 × 21 cm", "price": 4.50 },
+      { "ref": "corse-20x30", "label": "20 × 30 cm", "price": 5.00 },
+      { "ref": "corse-30x45", "label": "30 × 45 cm", "price": 8.00 },
+      { "ref": "corse-60x90", "label": "60 × 90 cm", "price": 12.00 },
+      { "ref": "corse-90x150", "label": "90 × 150 cm", "price": 21.00 },
+      { "ref": "corse-120x180", "label": "120 × 180 cm", "price": 51.00 },
+      { "ref": "corse-150x240", "label": "150 × 240 cm", "price": 75.00 },
+      { "ref": "corse-180x300", "label": "180 × 300 cm", "price": 105.00 }
+    ]
+  },
+  "alsace": {
+    "name": "Drapeau de l’Alsace",
+    "image": "rg-alsace-pad.jpg",
+    "sizes": [
+      { "ref": "alsace-14x21", "label": "14 × 21 cm", "price": 4.50 },
+      { "ref": "alsace-20x30", "label": "20 × 30 cm", "price": 5.00 },
+      { "ref": "alsace-30x45", "label": "30 × 45 cm", "price": 8.00 },
+      { "ref": "alsace-60x90", "label": "60 × 90 cm", "price": 12.00 },
+      { "ref": "alsace-90x150", "label": "90 × 150 cm", "price": 21.00 },
+      { "ref": "alsace-120x180", "label": "120 × 180 cm", "price": 51.00 },
+      { "ref": "alsace-150x240", "label": "150 × 240 cm", "price": 75.00 },
+      { "ref": "alsace-180x300", "label": "180 × 300 cm", "price": 105.00 }
+    ]
+  },
+  "idf": {
+    "name": "Drapeau de l’Île-de-France",
+    "image": "rg-idf-pad.jpg",
+    "sizes": [
+      { "ref": "idf-14x21", "label": "14 × 21 cm", "price": 4.50 },
+      { "ref": "idf-20x30", "label": "20 × 30 cm", "price": 5.00 },
+      { "ref": "idf-30x45", "label": "30 × 45 cm", "price": 8.00 },
+      { "ref": "idf-60x90", "label": "60 × 90 cm", "price": 12.00 },
+      { "ref": "idf-90x150", "label": "90 × 150 cm", "price": 21.00 },
+      { "ref": "idf-120x180", "label": "120 × 180 cm", "price": 51.00 },
+      { "ref": "idf-150x240", "label": "150 × 240 cm", "price": 75.00 },
+      { "ref": "idf-180x300", "label": "180 × 300 cm", "price": 105.00 }
+    ]
+  },
+  "languedoc": {
+    "name": "Drapeau du Languedoc-Roussillon",
+    "image": "rg-languedoc-pad.jpg",
+    "sizes": [
+      { "ref": "languedoc-14x21", "label": "14 × 21 cm", "price": 4.50 },
+      { "ref": "languedoc-20x30", "label": "20 × 30 cm", "price": 5.00 },
+      { "ref": "languedoc-30x45", "label": "30 × 45 cm", "price": 8.00 },
+      { "ref": "languedoc-60x90", "label": "60 × 90 cm", "price": 12.00 },
+      { "ref": "languedoc-90x150", "label": "90 × 150 cm", "price": 21.00 },
+      { "ref": "languedoc-120x180", "label": "120 × 180 cm", "price": 51.00 },
+      { "ref": "languedoc-150x240", "label": "150 × 240 cm", "price": 75.00 },
+      { "ref": "languedoc-180x300", "label": "180 × 300 cm", "price": 105.00 }
+    ]
+  },
+  "midi": {
+    "name": "Drapeau de Midi-Pyrénées",
+    "image": "rg-midi-pad.jpg",
+    "sizes": [
+      { "ref": "midi-14x21", "label": "14 × 21 cm", "price": 4.50 },
+      { "ref": "midi-20x30", "label": "20 × 30 cm", "price": 5.00 },
+      { "ref": "midi-30x45", "label": "30 × 45 cm", "price": 8.00 },
+      { "ref": "midi-60x90", "label": "60 × 90 cm", "price": 12.00 },
+      { "ref": "midi-90x150", "label": "90 × 150 cm", "price": 21.00 },
+      { "ref": "midi-120x180", "label": "120 × 180 cm", "price": 51.00 },
+      { "ref": "midi-150x240", "label": "150 × 240 cm", "price": 75.00 },
+      { "ref": "midi-180x300", "label": "180 × 300 cm", "price": 105.00 }
+    ]
+  },
+  "bourgogne": {
+    "name": "Drapeau de la Bourgogne",
+    "image": "rg-bourgogne-pad.jpg",
+    "sizes": [
+      { "ref": "bourgogne-14x21", "label": "14 × 21 cm", "price": 4.50 },
+      { "ref": "bourgogne-20x30", "label": "20 × 30 cm", "price": 5.00 },
+      { "ref": "bourgogne-30x45", "label": "30 × 45 cm", "price": 8.00 },
+      { "ref": "bourgogne-60x90", "label": "60 × 90 cm", "price": 12.00 },
+      { "ref": "bourgogne-90x150", "label": "90 × 150 cm", "price": 21.00 },
+      { "ref": "bourgogne-120x180", "label": "120 × 180 cm", "price": 51.00 },
+      { "ref": "bourgogne-150x240", "label": "150 × 240 cm", "price": 75.00 },
+      { "ref": "bourgogne-180x300", "label": "180 × 300 cm", "price": 105.00 }
+    ]
+  },
+  "auvergne": {
+    "name": "Drapeau de l’Auvergne",
+    "image": "rg-auvergne-pad.jpg",
+    "sizes": [
+      { "ref": "auvergne-14x21", "label": "14 × 21 cm", "price": 4.50 },
+      { "ref": "auvergne-20x30", "label": "20 × 30 cm", "price": 5.00 },
+      { "ref": "auvergne-30x45", "label": "30 × 45 cm", "price": 8.00 },
+      { "ref": "auvergne-60x90", "label": "60 × 90 cm", "price": 12.00 },
+      { "ref": "auvergne-90x150", "label": "90 × 150 cm", "price": 21.00 },
+      { "ref": "auvergne-120x180", "label": "120 × 180 cm", "price": 51.00 },
+      { "ref": "auvergne-150x240", "label": "150 × 240 cm", "price": 75.00 },
+      { "ref": "auvergne-180x300", "label": "180 × 300 cm", "price": 105.00 }
+    ]
+  },
+  "pins": {
+    "name": "Pin's drapeau français",
+    "image": "pin-drapeau.jpg",
+    "sizes": [
+      { "ref": "pins-1", "label": "1 pièce", "price": 2.00 },
+      { "ref": "pins-3", "label": "3 pièces", "price": 5.00 },
+      { "ref": "pins-5", "label": "5 pièces", "price": 9.00 },
+      { "ref": "pins-10", "label": "10 pièces", "price": 18.50 },
+      { "ref": "pins-50", "label": "50 pièces", "price": 93.00 },
+      { "ref": "pins-100", "label": "100 pièces", "price": 148.00 }
+    ]
+  },
+  "stickers": {
+    "name": "Pack de 50 autocollants voyage France",
+    "image": "stickers-1.jpg",
+    "sizes": [
+      { "ref": "stickers", "label": "", "price": 6.50 }
+    ]
+  },
+  "poster-tilsit": {
+    "name": "Français et Russes — de Tilsit à Châlons",
+    "image": "poster-tilsit.jpg",
+    "sizes": [
+      { "ref": "poster-tilsit-13x18", "label": "13 × 18 cm", "price": 18.00 },
+      { "ref": "poster-tilsit-20x25", "label": "20 × 25 cm", "price": 21.00 },
+      { "ref": "poster-tilsit-21x30", "label": "21 × 30 cm", "price": 25.00 },
+      { "ref": "poster-tilsit-30x40", "label": "30 × 40 cm", "price": 32.00 },
+      { "ref": "poster-tilsit-30x42", "label": "30 × 42 cm", "price": 34.00 },
+      { "ref": "poster-tilsit-40x50", "label": "40 × 50 cm", "price": 38.00 },
+      { "ref": "poster-tilsit-40x60", "label": "40 × 60 cm", "price": 42.00 },
+      { "ref": "poster-tilsit-50x70", "label": "50 × 70 cm", "price": 84.00 }
+    ]
+  },
+  "poster-infanterie": {
+    "name": "L'infanterie française dans la bataille",
+    "image": "poster-infanterie.jpg",
+    "sizes": [
+      { "ref": "poster-infanterie-13x18", "label": "13 × 18 cm", "price": 18.00 },
+      { "ref": "poster-infanterie-20x25", "label": "20 × 25 cm", "price": 21.00 },
+      { "ref": "poster-infanterie-21x30", "label": "21 × 30 cm", "price": 25.00 },
+      { "ref": "poster-infanterie-30x40", "label": "30 × 40 cm", "price": 32.00 },
+      { "ref": "poster-infanterie-30x42", "label": "30 × 42 cm", "price": 34.00 },
+      { "ref": "poster-infanterie-40x50", "label": "40 × 50 cm", "price": 38.00 },
+      { "ref": "poster-infanterie-40x60", "label": "40 × 60 cm", "price": 42.00 },
+      { "ref": "poster-infanterie-50x70", "label": "50 × 70 cm", "price": 84.00 }
+    ]
+  },
+  "poster-armement": {
+    "name": "Souscrivez aux bons d’armement",
+    "image": "poster-armement.jpg",
+    "sizes": [
+      { "ref": "poster-armement-13x18", "label": "13 × 18 cm", "price": 18.00 },
+      { "ref": "poster-armement-20x25", "label": "20 × 25 cm", "price": 21.00 },
+      { "ref": "poster-armement-21x30", "label": "21 × 30 cm", "price": 25.00 },
+      { "ref": "poster-armement-30x40", "label": "30 × 40 cm", "price": 32.00 },
+      { "ref": "poster-armement-30x42", "label": "30 × 42 cm", "price": 34.00 },
+      { "ref": "poster-armement-40x50", "label": "40 × 50 cm", "price": 38.00 },
+      { "ref": "poster-armement-40x60", "label": "40 × 60 cm", "price": 42.00 },
+      { "ref": "poster-armement-50x70", "label": "50 × 70 cm", "price": 84.00 }
+    ]
+  },
+  "poster-blindee": {
+    "name": "Jeunes, choisissez l’arme blindée",
+    "image": "poster-blindee.jpg",
+    "sizes": [
+      { "ref": "poster-blindee-13x18", "label": "13 × 18 cm", "price": 18.00 },
+      { "ref": "poster-blindee-20x25", "label": "20 × 25 cm", "price": 21.00 },
+      { "ref": "poster-blindee-21x30", "label": "21 × 30 cm", "price": 25.00 },
+      { "ref": "poster-blindee-30x40", "label": "30 × 40 cm", "price": 32.00 },
+      { "ref": "poster-blindee-30x42", "label": "30 × 42 cm", "price": 34.00 },
+      { "ref": "poster-blindee-40x50", "label": "40 × 50 cm", "price": 38.00 },
+      { "ref": "poster-blindee-40x60", "label": "40 × 60 cm", "price": 42.00 },
+      { "ref": "poster-blindee-50x70", "label": "50 × 70 cm", "price": 84.00 }
+    ]
+  },
+  "poster-cavalerie": {
+    "name": "Engagez-vous dans la cavalerie",
+    "image": "poster-cavalerie.jpg",
+    "sizes": [
+      { "ref": "poster-cavalerie-13x18", "label": "13 × 18 cm", "price": 18.00 },
+      { "ref": "poster-cavalerie-20x25", "label": "20 × 25 cm", "price": 21.00 },
+      { "ref": "poster-cavalerie-21x30", "label": "21 × 30 cm", "price": 25.00 },
+      { "ref": "poster-cavalerie-30x40", "label": "30 × 40 cm", "price": 32.00 },
+      { "ref": "poster-cavalerie-30x42", "label": "30 × 42 cm", "price": 34.00 },
+      { "ref": "poster-cavalerie-40x50", "label": "40 × 50 cm", "price": 38.00 },
+      { "ref": "poster-cavalerie-40x60", "label": "40 × 60 cm", "price": 42.00 },
+      { "ref": "poster-cavalerie-50x70", "label": "50 × 70 cm", "price": 84.00 }
+    ]
+  },
+  "poster-afrique": {
+    "name": "Exposition à la gloire de l’armée d’Afrique",
+    "image": "poster-afrique.jpg",
+    "sizes": [
+      { "ref": "poster-afrique-13x18", "label": "13 × 18 cm", "price": 18.00 },
+      { "ref": "poster-afrique-20x25", "label": "20 × 25 cm", "price": 21.00 },
+      { "ref": "poster-afrique-21x30", "label": "21 × 30 cm", "price": 25.00 },
+      { "ref": "poster-afrique-30x40", "label": "30 × 40 cm", "price": 32.00 },
+      { "ref": "poster-afrique-30x42", "label": "30 × 42 cm", "price": 34.00 },
+      { "ref": "poster-afrique-40x50", "label": "40 × 50 cm", "price": 38.00 },
+      { "ref": "poster-afrique-40x60", "label": "40 × 60 cm", "price": 42.00 },
+      { "ref": "poster-afrique-50x70", "label": "50 × 70 cm", "price": 84.00 }
+    ]
+  }
+}
