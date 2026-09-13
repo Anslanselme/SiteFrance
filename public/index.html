@@ -683,6 +683,13 @@ button.navlabel{border:0;background:none;padding:0;font-family:var(--sans);curso
   .grid{grid-template-columns:repeat(2,1fr)}
   .regions{grid-template-columns:repeat(2,1fr)}
   .topbar nav{display:none}
+
+  /* les navigateurs int�gr�s mobiles (appli Facebook, Instagram...) peinent
+     � compositer le grain (steps + mix-blend-mode) et les boucles de fond en
+     m�me temps que l'intro : �a se voit comme un scintillement du drapeau et
+     un d�marrage saccad�. On coupe ces boucles d�coratives sur mobile. */
+  .scene>.bg,.flag>svg,.folds,.grain{animation:none!important}
+  .grain{opacity:.22}
 }
 @media (max-width:700px){
   .nav .pill-t{display:none}          /* le panier reste accessible, en compact */
