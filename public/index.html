@@ -713,6 +713,23 @@ button.navlabel{border:0;background:none;padding:0;font-family:var(--sans);curso
   .rv{opacity:1;transform:none}
 }
 </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '28308518568807571');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=28308518568807571&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
 
@@ -1921,6 +1938,16 @@ button.navlabel{border:0;background:none;padding:0;font-family:var(--sans);curso
       return;
     }
 
+    if(window.fbq){
+      fbq('track','InitiateCheckout',{
+        content_ids:items.map(function(i){return i.ref;}),
+        content_type:'product',
+        num_items:items.reduce(function(n,i){return n+i.qty;},0),
+        value:cartItems().reduce(function(t,i){return t+i.price*i.qty;},0),
+        currency:'EUR'
+      });
+    }
+
     lab.textContent='Redirection vers le paiement…';
     fetch('/api/create-checkout-session',{
       method:'POST',
@@ -1993,6 +2020,7 @@ button.navlabel{border:0;background:none;padding:0;font-family:var(--sans);curso
       cart[k]=cart[k]||{p:p,q:0,ref:ref};
       cart[k].q++;
       render(true);
+      if(window.fbq) fbq('track','AddToCart',{content_ids:[ref],content_type:'product',value:p,currency:'EUR'});
       btn.classList.add('done'); label.textContent='Ajouté';
       clearTimeout(btn._t);
       btn._t=setTimeout(function(){btn.classList.remove('done');label.textContent=base;},1400);

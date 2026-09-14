@@ -9,6 +9,23 @@
     display:flex;align-items:center;justify-content:center;min-height:100vh;margin:0;text-align:center;padding:24px;}
   a{color:#f3ece2;}
 </style>
+<!-- Meta Pixel Code -->
+<script>
+!function(f,b,e,v,n,t,s)
+{if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+n.queue=[];t=b.createElement(e);t.async=!0;
+t.src=v;s=b.getElementsByTagName(e)[0];
+s.parentNode.insertBefore(t,s)}(window, document,'script',
+'https://connect.facebook.net/en_US/fbevents.js');
+fbq('init', '28308518568807571');
+fbq('track', 'PageView');
+</script>
+<noscript><img height="1" width="1" style="display:none"
+src="https://www.facebook.com/tr?id=28308518568807571&ev=PageView&noscript=1"
+/></noscript>
+<!-- End Meta Pixel Code -->
 </head>
 <body>
   <div>
@@ -17,5 +34,16 @@
        Votre commande part en préparation dès validation du paiement.</p>
     <p><a href="/">&larr; Retour à la boutique</a></p>
   </div>
+<script>
+  (function(){
+    var params=new URLSearchParams(location.search),
+        value=parseFloat(params.get('value')),
+        currency=params.get('currency')||'EUR',
+        ids=(params.get('ids')||'').split(',').filter(Boolean);
+    if(window.fbq && value){
+      fbq('track','Purchase',{value:value,currency:currency,content_ids:ids,content_type:'product'});
+    }
+  })();
+</script>
 </body>
 </html>

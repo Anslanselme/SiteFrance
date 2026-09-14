@@ -23,6 +23,8 @@ module.exports = async (req, res) => {
   }
 
   const line_items = [];
+  let totalCents = 0;
+  const refs = [];
   for (const item of items) {
     const ref = String(item && item.ref || '');
     const qty = Math.max(1, Math.min(MAX_QTY_PER_LINE, parseInt(item && item.qty, 10) || 1));
@@ -33,11 +35,14 @@ module.exports = async (req, res) => {
     }
     const origin = `https://${req.headers.host}`;
     const productName = product.label ? `${product.name} — ${product.label}` : product.name;
+    const unitAmount = Math.round(product.price * 100);
+    totalCents += unitAmount * qty;
+    refs.push(ref);
     line_items.push({
       quantity: qty,
       price_data: {
         currency: 'eur',
-        unit_amount: Math.round(product.price * 100),
+        unit_amount: unitAmount,
         product_data: {
           name: productName,
           images: [`${origin}/img/${product.image}`],
@@ -49,12 +54,17 @@ module.exports = async (req, res) => {
 
   try {
     const origin = `https://${req.headers.host}`;
+    const successParams = new URLSearchParams({
+      value: (totalCents / 100).toFixed(2),
+      currency: 'EUR',
+      ids: refs.join(','),
+    });
     const session = await stripe.checkout.sessions.create({
       mode: 'payment',
       line_items,
       shipping_address_collection: { allowed_countries: SHIP_COUNTRIES },
       phone_number_collection: { enabled: true },
-      success_url: `${origin}/merci.html`,
+      success_url: `${origin}/merci.html?${successParams.toString()}`,
       cancel_url: `${origin}/`,
     });
     res.status(200).json({ url: session.url });
